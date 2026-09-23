@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Work-Zone Safety Pole System | Operational Twin</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">⚠</div>
+      <div class="brand-text">
+        <h1>Smart Work-Zone Safety Pole</h1>
+        <p>AI Edge Collision Prevention System • Raspberry Pi 5</p>
+      </div>
+    </div>
+
+    <div class="header-status">
+      <div id="audioToggleBtn" style="cursor: pointer; font-size: 0.8rem; background: #1e293b; padding: 6px 12px; border-radius: 6px; border: 1px solid #334155;">
+        🔊 Audio: <span id="audioStatusText" style="color: #10b981; font-weight: bold;">ENABLED</span>
+      </div>
+
+      <div style="font-size: 0.8rem; color: #94a3b8;">
+        Active Workers: <span id="hdrWorkerCount" style="color: #fff; font-weight: bold;">1</span>
+      </div>
+
+      <div id="mainRiskPill" class="status-pill pill-safe">
+        <span class="status-dot">●</span>
+        <span id="mainRiskText">SAFE</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 3-Column Tactical Layout -->
+  <main class="dashboard-grid">
+
+    <!-- Column 1: Dual Video Feeds -->
+    <section class="video-column">
+      <!-- Road Facing Camera -->
+      <div class="card" style="flex: 1;">
+        <div class="card-title">
+          <span>Road Camera Feed (AI Vision & Tracking)</span>
+          <span style="color: #10b981; font-size: 0.7rem;">● LIVE</span>
+        </div>
+        <div class="video-container">
+          <img id="roadVideoImg" src="/static/placeholder.jpg" alt="Road Camera Feed">
+          <div class="video-badge">CSI ROAD CAM • YOLOv8</div>
+        </div>
+      </div>
+
+      <!-- Work-Zone Area Camera -->
+      <div class="card" style="flex: 1;">
+        <div class="card-title">
+          <span>Work-Zone Area Camera</span>
+          <span style="color: #10b981; font-size: 0.7rem;">● LIVE</span>
+        </div>
+        <div class="video-container">
+          <img id="workzoneVideoImg" src="/static/placeholder.jpg" alt="Work-Zone Camera Feed">
+          <div class="video-badge">USB WORKZONE CAM</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Column 2: 2D Radar Bird's-Eye View (BEV) -->
+    <section class="radar-column">
+      <div class="card" style="height: 100%;">
+        <div class="card-title">
+          <span>Work-Zone Tactical Radar (Bird's-Eye View Ground Plane)</span>
+          <span style="font-size: 0.7rem; color: #8c9bb5;">Scale: Metric Grid (5m/div)</span>
+        </div>
+
+        <div class="radar-wrapper">
+          <canvas id="radarCanvas"></canvas>
+
+          <div class="radar-overlay-stats">
+            <div>Pole: <b>(0.0, 0.0)m</b></div>
+            <div>TSD20 LiDAR: <b id="radarLidarDist">-- m</b></div>
+            <div>Range Rate: <b id="radarLidarRate">-- m/s</b></div>
+            <div>Target: <b id="radarCriticalPair">None</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Column 3: Telemetry, Actuators & Scenario Controls -->
+    <section class="telemetry-column">
+
+      <!-- AI Prescriptive Evasion Advisory Card -->
+      <div class="card" id="cardGuidance" style="border-left: 4px solid #10b981; transition: border 0.3s ease;">
+        <div class="card-title">
+          <span>AI Evasive Directive</span>
+          <span id="guidanceUrgencyBadge" style="font-size: 0.68rem; padding: 2px 6px; border-radius: 4px; background: rgba(16, 185, 129, 0.2); color: #10b981; font-weight: bold;">NORMAL</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+          <span style="font-size: 0.72rem; color: #8c9bb5;">Targeted Worker:</span>
+          <span id="guidanceWorkerId" style="font-size: 0.78rem; font-weight: 700; color: #f59e0b;">WORKER_01</span>
+        </div>
+        <div id="guidanceDirectiveBox" style="background: #090e17; border: 1px solid #1f293d; border-radius: 6px; padding: 10px; font-weight: 700; font-size: 0.88rem; color: #10b981; line-height: 1.3; min-height: 48px; display: flex; align-items: center;">
+          Work zone secure. Maintain normal awareness.
+        </div>
+        <div style="margin-top: 6px; font-size: 0.7rem; color: #8c9bb5; display: flex; justify-content: space-between;">
+          <span>Badge Haptic: <b id="guidanceHaptic" style="color: #cbd5e1;">NONE</b></span>
+          <span>Directive: <b id="guidanceAction" style="color: #cbd5e1;">HOLD_POSITION</b></span>
+        </div>
+      </div>
+
+      <!-- Risk Metrics Cards -->
+      <div class="card">
+        <div class="card-title">Threat Assessment</div>
+        <div class="metrics-row">
+          <div class="metric-box">
+            <div class="metric-label">Time-To-Collision</div>
+            <div id="valTtc" class="metric-value" style="color: #10b981;">> 10s</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Separation Dist</div>
+            <div id="valDist" class="metric-value">-- m</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 10px; font-size: 0.75rem; color: #94a3b8;">
+          Active Hazard Reasons:
+          <div id="hazardReasonsList" style="color: #f87171; font-weight: 600; margin-top: 2px;">
+            Normal traffic operations. Work zone secure.
+          </div>
+        </div>
+      </div>
+
+      <!-- Warning Actuators Panel -->
+      <div class="card">
+        <div class="card-title">Warning System Actuators</div>
+        <div class="actuators-grid">
+          <div class="actuator-indicator">
+            <div id="lightCaution" class="indicator-light"></div>
+            <span>AMBER LED</span>
+          </div>
+          <div class="actuator-indicator">
+            <div id="lightDanger" class="indicator-light"></div>
+            <span>RED STROBE</span>
+          </div>
+          <div class="actuator-indicator">
+            <div id="lightSiren" class="indicator-light"></div>
+            <span>12V SIREN</span>
+          </div>
+          <div class="actuator-indicator">
+            <div id="lightBuzzer" class="indicator-light"></div>
+            <span>BUZZER</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESP32 Worker Badge Telemetry -->
+      <div class="card">
+        <div class="card-title">Worker Tags (ESP32-S3 + MPU6500)</div>
+        <div id="workerCardsContainer">
+          <div class="worker-card">
+            <div class="worker-header">
+              <span>WORKER_01</span>
+              <span class="badge-state badge-static">STATIC</span>
+            </div>
+            <div class="worker-detail-grid">
+              <div>SVM: <b>0.99 g</b></div>
+              <div>Battery: <b>4.15 V</b></div>
+              <div>RSSI: <b>-62 dBm</b></div>
+              <div>Est Dist: <b>2.4 m</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scenario Control -->
+      <div class="card">
+        <div class="card-title">Interactive Scenario Testing</div>
+        <div class="scenario-selector">
+          <button class="btn-scenario active" onclick="switchScenario('normal')">
+            1. Normal Passing Traffic (Safe)
+          </button>
+          <button class="btn-scenario" onclick="switchScenario('distracted_driver')">
+            2. Distracted Driver (Vehicle Swerves)
+          </button>
+          <button class="btn-scenario" onclick="switchScenario('worker_incursion')">
+            3. Worker Incursion (Steps to Lane)
+          </button>
+          <button class="btn-scenario" onclick="switchScenario('worker_fall')">
+            4. Worker Down (Fall Detected)
+          </button>
+        </div>
+      </div>
+
+      <!-- Real-Time Event Audit Log -->
+      <div class="card">
+        <div class="card-title">Black-Box Audit Log</div>
+        <div id="incidentLogBox" class="log-box">
+          <div class="log-entry">[BOOT] Safety Pole System initialized.</div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

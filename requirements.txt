@@ -1,0 +1,14 @@
+# Smart Work-Zone Safety Pole System Dependencies
+# Optimized for Raspberry Pi 5 & Windows/Linux Development
+
+numpy>=1.24.0
+opencv-python>=4.8.0
+ultralytics>=8.0.0
+torch>=2.0.0
+torchvision>=0.15.0
+scipy>=1.10.0
+tornado>=6.3.0
+pyserial>=3.5
+pyyaml>=6.0
+rich>=13.0.0
+pytest>=7.0.0
