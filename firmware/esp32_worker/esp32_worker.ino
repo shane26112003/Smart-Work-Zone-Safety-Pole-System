@@ -331,8 +331,7 @@ void broadcastBleBeacon() {
     payload[2] = (uint8_t)currentMotionState;
     payload[3] = (uint8_t)constrain((int)((batteryVolts - 3.3f) / 0.9f * 100.0f), 0, 100);
 
-    std::string mfgData((char*)payload, sizeof(payload));
-    advData.setManufacturerData(mfgData);
+    advData.setManufacturerData(String((char*)payload, sizeof(payload)));
 
     pAdvertising->setAdvertisementData(advData);
 }
