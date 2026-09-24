@@ -47,10 +47,11 @@ fi
 
 source venv/bin/activate
 
-# 5. Install PyTorch & Ultralytics YOLO
-echo "[5/6] Installing Ultralytics YOLO and PyTorch for ARM64..."
+# 5. Install PyTorch & Ultralytics YOLO (CPU-only for Raspberry Pi ARM64)
+echo "[5/6] Installing CPU-optimized PyTorch and Ultralytics YOLO (skipping NVIDIA CUDA)..."
 pip install --upgrade pip
-pip install ultralytics torch torchvision
+pip install --default-timeout=1000 torch torchvision --index-url https://download.pytorch.org/whl/cpu
+pip install ultralytics
 
 # 6. Verify Installation
 echo "[6/6] Running system verification tests..."
