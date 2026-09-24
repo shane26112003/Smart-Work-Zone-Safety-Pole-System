@@ -9,6 +9,7 @@ import time
 import signal
 import argparse
 import logging
+from typing import Any, Optional
 import cv2
 import numpy as np
 
@@ -38,20 +39,37 @@ logger = logging.getLogger("SafetyPole")
 class SafetyPoleSystem:
     """Central manager orchestrating all subsystems."""
 
-    def __init__(self, mode: str = "auto"):
+    def __init__(self, mode: str = "auto", camera_source: Any = None, model_path: Optional[str] = None):
         self.mode = mode
         self.running = False
 
         logger.info("Initializing Smart Work-Zone Safety Pole System...")
 
+        if camera_source is not None:
+            if str(camera_source).lower() == "picam2":
+                CONFIG.camera.ROAD_CAM_ID = "picam2"
+                CONFIG.camera.USE_PICAMERA2 = True
+            elif str(camera_source).isdigit():
+                CONFIG.camera.ROAD_CAM_ID = int(camera_source)
+                CONFIG.camera.USE_PICAMERA2 = False
+            elif str(camera_source).lower() in ["mock", "synthetic", "sim"]:
+                CONFIG.camera.ROAD_CAM_ID = "mock"
+                CONFIG.camera.USE_PICAMERA2 = False
+            else:
+                CONFIG.camera.ROAD_CAM_ID = camera_source
+                CONFIG.camera.USE_PICAMERA2 = False
+
+        if model_path:
+            CONFIG.cv.MODEL_PATH = model_path
+
         # 1. Sensor Ingestion Layer
         lidar_src = "mock" if mode == "simulation" else CONFIG.lidar.SOURCE_TYPE
         self.lidar = LidarTSD20(mode=lidar_src)
         self.worker_rx = WorkerReceiver()
-        self.camera_mgr = CameraManager()
+        self.camera_mgr = CameraManager(road_cam_id=CONFIG.camera.ROAD_CAM_ID)
 
         # 2. Perception & AI Vision Layer
-        self.detector = ObjectDetector()
+        self.detector = ObjectDetector(model_path=CONFIG.cv.MODEL_PATH)
         self.tracker = MultiObjectTracker(max_age=CONFIG.cv.TRACK_MAX_AGE_FRAMES)
 
         # 3. Fusion & Calibration Layer
@@ -245,12 +263,20 @@ def main():
                         help="Execution mode (simulation=synthetic actors, hardware=physical devices)")
     parser.add_argument("--port", type=int, default=CONFIG.network.DASHBOARD_PORT,
                         help="Web Dashboard port")
+    parser.add_argument("--camera-source", "--camera", "--source", dest="camera_source", type=str, default=None,
+                        help="Road camera source: 'picam2', camera index (e.g. '0'), 'synthetic', or video path")
+    parser.add_argument("--model", type=str, default=None,
+                        help="Path to custom YOLO model weights (.pt file)")
+    parser.add_argument("--lidar-source", dest="lidar_source", type=str, default=None,
+                        help="LiDAR input source: serial port or 'mock'")
     args = parser.parse_args()
 
     if args.port:
         CONFIG.network.DASHBOARD_PORT = args.port
+    if args.lidar_source:
+        CONFIG.lidar.SOURCE_TYPE = args.lidar_source
 
-    system = SafetyPoleSystem(mode=args.mode)
+    system = SafetyPoleSystem(mode=args.mode, camera_source=args.camera_source, model_path=args.model)
 
     # Signal handlers for graceful exit
     def sig_handler(sig, frame):

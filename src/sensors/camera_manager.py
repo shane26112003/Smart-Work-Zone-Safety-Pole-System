@@ -301,10 +301,12 @@ class CameraFeed:
 class CameraManager:
     """Aggregates and coordinates the dual cameras (Road & Work-zone)."""
 
-    def __init__(self):
-        self.road_cam = CameraFeed("Road_Camera", CONFIG.camera.ROAD_CAM_ID, 
+    def __init__(self, road_cam_id: Any = None, workzone_cam_id: Any = None):
+        rc_id = road_cam_id if road_cam_id is not None else CONFIG.camera.ROAD_CAM_ID
+        wz_id = workzone_cam_id if workzone_cam_id is not None else CONFIG.camera.WORKZONE_CAM_ID
+        self.road_cam = CameraFeed("Road_Camera", rc_id, 
                                    CONFIG.camera.FRAME_WIDTH, CONFIG.camera.FRAME_HEIGHT)
-        self.workzone_cam = CameraFeed("Workzone_Camera", CONFIG.camera.WORKZONE_CAM_ID, 
+        self.workzone_cam = CameraFeed("Workzone_Camera", wz_id, 
                                        CONFIG.camera.FRAME_WIDTH, CONFIG.camera.FRAME_HEIGHT)
 
     def start(self):

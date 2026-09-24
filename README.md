@@ -331,6 +331,19 @@ source venv/bin/activate
 python main.py --mode auto
 ```
 
+#### Camera & Sensor Override Flags:
+You can explicitly override camera sources or sensor configurations:
+```bash
+# Explicitly target Raspberry Pi 5 MIPI CSI Camera (OV5647 via Picamera2):
+python main.py --camera-source picam2
+
+# Or specify a USB webcam (device index 0):
+python main.py --camera-source 0
+
+# Specify custom YOLO model weights and port:
+python main.py --camera-source picam2 --model yolov8s.pt --port 8080
+```
+
 #### Mode 3: Interactive Simulation Mode (PC / Mac / Raspberry Pi)
 Runs the interactive multi-agent simulator without requiring any physical sensors or ESP32 hardware:
 ```bash
