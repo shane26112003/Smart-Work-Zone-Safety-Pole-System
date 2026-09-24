@@ -105,23 +105,27 @@ void setup() {
 
     // 2. Initialize Wi-Fi Connection
     Serial.printf("[WIFI] Connecting to SSID: %s...\n", WIFI_SSID);
+    WiFi.disconnect(true); // Clear any stale radio state
+    delay(100);
     WiFi.mode(WIFI_STA);
+    WiFi.setSleep(false); // Disable modem sleep for ultra-low latency UDP
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     
-    // Non-blocking or short wait so system still functions if AP comes up later
     int retries = 0;
-    while (WiFi.status() != WL_CONNECTED && retries < 20) {
-        delay(250);
+    while (WiFi.status() != WL_CONNECTED && retries < 30) {
+        delay(300);
         digitalWrite(STATUS_LED_PIN, !digitalRead(STATUS_LED_PIN));
         Serial.print(".");
         retries++;
     }
     
     if (WiFi.status() == WL_CONNECTED) {
-        Serial.printf("\n[WIFI] Connected! Assigned IP: %s\n", WiFi.localIP().toString().c_str());
+        Serial.printf("\n[WIFI] Connected! Assigned IP: %s | RSSI: %d dBm\n", 
+                      WiFi.localIP().toString().c_str(), WiFi.RSSI());
         udpClient.begin(UDP_PORT);
     } else {
-        Serial.println("\n[WIFI] Warning: Could not connect immediately. Telemetry will retry.");
+        Serial.printf("\n[WIFI] Connection Failed (Status code: %d).\n", WiFi.status());
+        Serial.println(">>> CHECK: 1) Is Pi 5 Hotspot 2.4GHz? 2) Is SSID/Password correct? <<<");
     }
 
     // 3. Initialize BLE Beacon

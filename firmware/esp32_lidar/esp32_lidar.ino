@@ -99,22 +99,27 @@ void setup() {
 
     // Connect to Safety Pole Wi-Fi
     Serial.printf("[WIFI] Connecting to %s...\n", WIFI_SSID);
+    WiFi.disconnect(true); // Clear any stale radio state
+    delay(100);
     WiFi.mode(WIFI_STA);
+    WiFi.setSleep(false); // Ultra-low latency UDP
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
     int retries = 0;
-    while (WiFi.status() != WL_CONNECTED && retries < 20) {
-        delay(250);
+    while (WiFi.status() != WL_CONNECTED && retries < 30) {
+        delay(300);
         digitalWrite(STATUS_LED_PIN, !digitalRead(STATUS_LED_PIN));
         Serial.print(".");
         retries++;
     }
 
     if (WiFi.status() == WL_CONNECTED) {
-        Serial.printf("\n[WIFI] Connected! IP: %s\n", WiFi.localIP().toString().c_str());
+        Serial.printf("\n[WIFI] Connected! IP: %s | RSSI: %d dBm\n", 
+                      WiFi.localIP().toString().c_str(), WiFi.RSSI());
         lidarUdp.begin(LIDAR_UDP_PORT);
     } else {
-        Serial.println("\n[WIFI] Warning: Continuing in background connection mode.");
+        Serial.printf("\n[WIFI] Connection Failed (Status code: %d).\n", WiFi.status());
+        Serial.println(">>> CHECK: 1) Is Pi 5 Hotspot 2.4GHz? 2) Is SSID/Password correct? <<<");
     }
 
     digitalWrite(STATUS_LED_PIN, HIGH);
