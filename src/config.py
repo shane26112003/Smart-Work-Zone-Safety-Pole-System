@@ -43,18 +43,18 @@ class WorkerTagConfig:
 @dataclass
 class CameraConfig:
     """Dual camera configurations (Road-facing & Work-zone facing)."""
-    ROAD_CAM_ID: Any = 0            # Device index, video path, or "mock"
-    WORKZONE_CAM_ID: Any = 1        # Device index, video path, or "mock"
+    ROAD_CAM_ID: Any = "picam2"       # Bound to Picamera2 for Raspberry Pi CSI
+    WORKZONE_CAM_ID: Any = "mock"     # Synthetic workzone feed (single physical camera setup)
     FRAME_WIDTH: int = 640
     FRAME_HEIGHT: int = 480
     TARGET_FPS: int = 25
-    USE_PICAMERA2: bool = False     # Set to True on Raspberry Pi 5 with Camera Module 3
+    USE_PICAMERA2: bool = True        # Enabled for Raspberry Pi 5 MIPI CSI (OV5647 Rev 1.3)
 
 
 @dataclass
 class CVConfig:
     """Computer Vision & Tracking configuration."""
-    MODEL_PATH: str = "yolov8n.pt"  # Will auto-download or use lightweight model
+    MODEL_PATH: str = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "yolov8n.pt")
     CONFIDENCE_THRESHOLD: float = 0.35
     IOU_THRESHOLD: float = 0.45
     # COCO Class IDs: 0=person, 2=car, 3=motorcycle, 5=bus, 7=truck
