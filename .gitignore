@@ -50,3 +50,9 @@ desktop.ini
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Large Model Weights (dynamically fetched on demand by Ultralytics)
+*.pt
+!yolov8n.pt
+*.onnx
+*.engine

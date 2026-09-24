@@ -63,9 +63,17 @@ class CameraFeed:
                 try:
                     from picamera2 import Picamera2
                     self._picam2 = Picamera2()
-                    config = self._picam2.create_video_configuration(main={"size": (self.width, self.height), "format": "BGR888"})
+                    # Configure preview/video stream for OV5647
+                    config = self._picam2.create_video_configuration(
+                        main={"size": (self.width, self.height), "format": "BGR888"}
+                    )
                     self._picam2.configure(config)
                     self._picam2.start()
+                    # Configure camera tuning controls for OV5647
+                    try:
+                        self._picam2.set_controls({"AeEnable": True, "AwbEnable": True})
+                    except Exception:
+                        pass
                     self._is_picam2 = True
                     logger.info(f"Camera '{self.name}' opened via Picamera2 (Rev 1.3 OV5647 CSI).")
                 except Exception as e:
@@ -129,12 +137,14 @@ class CameraFeed:
 
         while self.running:
             t0 = time.time()
+            frame = None
             if self._is_synthetic:
                 frame = self._render_synthetic_scene()
             elif self._is_picam2 and self._picam2 is not None:
                 try:
                     frame = self._picam2.capture_array()
-                except Exception:
+                except Exception as e:
+                    logger.warning(f"Picamera2 capture error: {e}. Using synthetic fallback.")
                     frame = self._render_synthetic_scene()
             else:
                 ret, frame = self._cap.read()
@@ -147,6 +157,15 @@ class CameraFeed:
                         frame = self._render_synthetic_scene()
                 else:
                     frame = cv2.resize(frame, (self.width, self.height))
+
+            # Robust frame normalization for AI inference:
+            # Picamera2 / libcamera frequently returns 4-channel XBGR8888 or RGBA8888
+            if frame is not None:
+                if frame.ndim == 3 and frame.shape[2] == 4:
+                    frame = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)
+                elif frame.ndim == 2:
+                    frame = cv2.cvtColor(frame, cv2.COLOR_GRAY2BGR)
+                frame = np.ascontiguousarray(frame, dtype=np.uint8)
 
             with self._lock:
                 self._latest_frame = frame
@@ -303,6 +322,9 @@ class CameraManager:
 
     def get_workzone_frame(self) -> Optional[np.ndarray]:
         return self.workzone_cam.get_latest_frame()
+
+    def is_road_synthetic(self) -> bool:
+        return self.road_cam._is_synthetic if self.road_cam else True
 
     def update_simulation_actors(self, veh_y: float, veh_speed: float, wrk_x: float, wrk_y: float):
         self.road_cam.update_simulation_actors(veh_y, veh_speed, wrk_x, wrk_y)

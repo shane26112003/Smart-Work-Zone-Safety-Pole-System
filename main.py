@@ -133,7 +133,8 @@ class SafetyPoleSystem:
                 # 3. Computer Vision: Object Detection on Road Camera
                 detections = []
                 if road_frame is not None:
-                    detections = self.detector.detect(road_frame)
+                    is_synth = self.camera_mgr.is_road_synthetic()
+                    detections = self.detector.detect(road_frame, is_synthetic=is_synth)
 
                 # 4. Multi-Object Tracking
                 tracks = self.tracker.update(detections)
@@ -199,25 +200,36 @@ class SafetyPoleSystem:
         b_color = (b_color_rgb[2], b_color_rgb[1], b_color_rgb[0]) # BGR
 
         cv2.rectangle(out, (0, 0), (w, 36), b_color, -1)
-        cv2.putText(out, f"RISK LEVEL: {assessment.overall_level} | TTC: {assessment.min_ttc_sec:.1f}s | DIST: {assessment.min_distance_m:.1f}m", 
-                    (15, 24), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (255, 255, 255), 2)
+        active_model = getattr(self.detector, "active_model_name", "AI")
+        cv2.putText(out, f"RISK: {assessment.overall_level} | TTC: {assessment.min_ttc_sec:.1f}s | DIST: {assessment.min_distance_m:.1f}m | MODEL: {active_model}", 
+                    (15, 24), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (255, 255, 255), 2)
 
-        # Draw track boxes
+        # Draw track boxes with tactical styling
         for trk in tracks:
             x1, y1, x2, y2 = trk.bbox
             is_veh = (trk.class_name == "vehicle")
             color = (0, 140, 255) if is_veh else (0, 255, 0)
+            if not is_veh and not getattr(trk, "ppe_verified", True):
+                color = (0, 165, 255) # Orange border for unverified / pedestrian
 
-            # Box
+            # Bounding box
             cv2.rectangle(out, (x1, y1), (x2, y2), color, 2)
             
-            # Label
-            label = f"{trk.class_name.upper()} #{trk.track_id}"
+            # Subclass label formatting
+            sub = getattr(trk, "subclass", "")
+            conf_pct = int(trk.confidence * 100)
             if trk.associated_worker_id:
-                label = f"👷 {trk.associated_worker_id}"
+                label = f"👷 {trk.associated_worker_id} ({conf_pct}%)"
+            elif is_veh:
+                label = f"{sub.upper() or 'VEHICLE'} #{trk.track_id} ({conf_pct}%)"
+            elif getattr(trk, "ppe_verified", False):
+                label = f"👷 WORKER #{trk.track_id} [PPE ✓] ({conf_pct}%)"
+            else:
+                label = f"⚠️ PEDESTRIAN #{trk.track_id} ({conf_pct}%)"
 
-            cv2.rectangle(out, (x1, y1 - 20), (x1 + len(label) * 11, y1), color, -1)
-            cv2.putText(out, label, (x1 + 3, y1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 0), 1)
+            lbl_w = max(90, len(label) * 9 + 10)
+            cv2.rectangle(out, (x1, max(0, y1 - 22)), (x1 + lbl_w, y1), color, -1)
+            cv2.putText(out, label, (x1 + 4, max(12, y1 - 6)), cv2.FONT_HERSHEY_SIMPLEX, 0.42, (0, 0, 0), 1)
 
             # Ground contact dot
             cv2.circle(out, trk.ground_point, 4, (0, 0, 255), -1)

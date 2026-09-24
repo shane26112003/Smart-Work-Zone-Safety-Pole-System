@@ -54,15 +54,29 @@ class CameraConfig:
 @dataclass
 class CVConfig:
     """Computer Vision & Tracking configuration."""
-    MODEL_PATH: str = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "yolov8n.pt")
-    CONFIDENCE_THRESHOLD: float = 0.35
+    # Model configuration: yolov8s.pt (high accuracy, 44.9 mAP) with automated fallbacks (yolo11s/yolov8n)
+    MODEL_PATH: str = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "yolov8s.pt")
+    FALLBACK_MODEL_PATH: str = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "yolov8n.pt")
+    CONFIDENCE_THRESHOLD: float = 0.25    # Lowered to 0.25 for early detection of distant vehicles and workers
     IOU_THRESHOLD: float = 0.45
-    # COCO Class IDs: 0=person, 2=car, 3=motorcycle, 5=bus, 7=truck
+    IMAGE_SIZE: int = 640                 # Inference resolution (matching camera width)
+
+    # Image enhancement for Raspberry Pi OV5647 CSI camera (contrast & low-light handling)
+    ENABLE_ENHANCEMENT: bool = True
+    CLAHE_CLIP_LIMIT: float = 2.0
+
+    # Intelligent Worker PPE Verification (High-Vis Vest & Hard Hat detection)
+    ENABLE_PPE_CHECK: bool = True
+    PPE_MIN_RATIO: float = 0.05           # Minimum high-vis vest color ratio in upper body
+    STRICT_PPE_MODE: bool = False         # If True, persons without PPE are classified as 'pedestrian'
+
+    # COCO Class IDs: 0=person, 1=bicycle, 2=car, 3=motorcycle, 5=bus, 7=truck
     WORKER_CLASSES: List[int] = field(default_factory=lambda: [0])
-    VEHICLE_CLASSES: List[int] = field(default_factory=lambda: [2, 3, 5, 7])
+    VEHICLE_CLASSES: List[int] = field(default_factory=lambda: [1, 2, 3, 5, 7])
+
     # Tracking parameters
     TRACK_MAX_AGE_FRAMES: int = 30
-    TRACK_MIN_HITS: int = 3
+    TRACK_MIN_HITS: int = 2               # Reduced to 2 for faster track initiation
 
 
 @dataclass

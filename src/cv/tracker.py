@@ -28,6 +28,9 @@ class TrackedObject:
     hits: int = 1
     time_since_update: int = 0
     confidence: float = 0.8
+    subclass: str = ""              # "car", "truck", "bus", "motorcycle", "bicycle", "worker_ppe", "pedestrian"
+    ppe_verified: bool = False      # Verified high-visibility vest or hard hat
+    ppe_confidence: float = 0.0
     associated_worker_id: Optional[str] = None # Filled if matched to ESP32
 
 
@@ -38,7 +41,8 @@ class KalmanBoxTracker:
     """
     count = 0
 
-    def __init__(self, bbox: Tuple[int, int, int, int], class_name: str, confidence: float):
+    def __init__(self, bbox: Tuple[int, int, int, int], class_name: str, confidence: float,
+                 subclass: str = "", ppe_verified: bool = False, ppe_confidence: float = 0.0):
         # State vector: [x, y, s, r, vx, vy, vs]
         self.kf_dim_x = 7
         self.kf_dim_z = 4
@@ -74,6 +78,9 @@ class KalmanBoxTracker:
         KalmanBoxTracker.count += 1
 
         self.class_name = class_name
+        self.subclass = subclass
+        self.ppe_verified = ppe_verified
+        self.ppe_confidence = ppe_confidence
         self.confidence = confidence
         self.history: Deque[Tuple[int, int]] = deque(maxlen=30)
         self.hits = 1
@@ -101,12 +108,17 @@ class KalmanBoxTracker:
 
         return self.get_state()
 
-    def update(self, bbox: Tuple[int, int, int, int], confidence: float):
+    def update(self, bbox: Tuple[int, int, int, int], confidence: float,
+               subclass: str = "", ppe_verified: bool = False, ppe_confidence: float = 0.0):
         """Updates the filter with an observed bounding box."""
         now = time.time()
         self.time_since_update = 0
         self.hits += 1
         self.confidence = confidence
+        if subclass:
+            self.subclass = subclass
+        self.ppe_verified = ppe_verified
+        self.ppe_confidence = ppe_confidence
 
         w = max(1, bbox[2] - bbox[0])
         h = max(1, bbox[3] - bbox[1])
@@ -190,12 +202,25 @@ class MultiObjectTracker:
                 if cost_matrix[r, c] < (1.0 - self.iou_threshold):
                     matched_tracks.append(r)
                     matched_dets.append(c)
-                    self.trackers[r].update(detections[c].bbox, detections[c].confidence)
+                    self.trackers[r].update(
+                        detections[c].bbox,
+                        detections[c].confidence,
+                        subclass=detections[c].subclass,
+                        ppe_verified=detections[c].ppe_verified,
+                        ppe_confidence=detections[c].ppe_confidence
+                    )
 
         # 3. Create new trackers for unmatched detections
         for d_idx, det in enumerate(detections):
             if d_idx not in matched_dets:
-                new_trk = KalmanBoxTracker(det.bbox, det.class_name, det.confidence)
+                new_trk = KalmanBoxTracker(
+                    det.bbox,
+                    det.class_name,
+                    det.confidence,
+                    subclass=det.subclass,
+                    ppe_verified=det.ppe_verified,
+                    ppe_confidence=det.ppe_confidence
+                )
                 self.trackers.append(new_trk)
 
         # 4. Filter expired trackers and build output list
@@ -229,6 +254,9 @@ class MultiObjectTracker:
                         hits=trk.hits,
                         time_since_update=trk.time_since_update,
                         confidence=trk.confidence,
+                        subclass=trk.subclass,
+                        ppe_verified=trk.ppe_verified,
+                        ppe_confidence=trk.ppe_confidence,
                         associated_worker_id=trk.associated_worker_id
                     ))
 

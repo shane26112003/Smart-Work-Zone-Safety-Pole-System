@@ -36,6 +36,14 @@ def run_suite():
             "test_worker_fall_vulnerability_multiplier",
             "test_evasive_guidance_generation"
         ]),
+        ("test_cv_detector", [
+            "test_detector_initialization",
+            "test_four_channel_and_grayscale_sanitization",
+            "test_clahe_contrast_enhancement",
+            "test_worker_ppe_verification",
+            "test_synthetic_scene_worker_vehicle_separation",
+            "test_tracker_subclass_and_ppe_propagation"
+        ]),
         ("test_system_pipeline", [
             "test_full_pipeline_step"
         ])

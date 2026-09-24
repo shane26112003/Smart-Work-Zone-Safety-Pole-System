@@ -82,8 +82,10 @@ An AI-powered smart safety pole system for road construction and work zones, des
 - Transmits data at 50 Hz over Wi-Fi UDP to RPi 5 port `5006` (or direct UART).
 
 ### 2.4 AI Computer Vision & Tracking
-- **Detector**: Lightweight YOLOv8 (`yolov8n.pt`) optimized for Raspberry Pi 5 CPU/GPU.
-- **Tracker**: Multi-Object Tracking with Kalman Filter and Hungarian IoU association, computing object velocity vectors and maintaining persistent IDs.
+- **Detector**: High-precision YOLOv8 / YOLO11 (`yolov8s.pt`, 44.9 mAP, with automatic fallbacks to `yolo11s.pt` or `yolov8n.pt`) with real-time PyTorch CPU 4-thread execution for Raspberry Pi 5.
+- **Worker PPE Verifier**: Multi-spectral color and feature classifier analyzing upper body crops for ANSI Class 2/3 high-visibility safety vests (fluorescent orange / lime green / reflective silver) and safety hard hats.
+- **Hardware Image Enhancer**: Adaptive CLAHE (Contrast-Limited Adaptive Histogram Equalization) and 4-channel BGRA/XBGR normalization designed specifically for the Raspberry Pi Camera Module Rev 1.3 (OV5647).
+- **Tracker**: Multi-Object Tracking with Kalman Filter and Hungarian IoU association, computing object velocity vectors, maintaining persistent IDs, and tracking PPE compliance.
 
 ### 2.5 Multi-Sensor Extended Kalman Filter (EKF) Fusion
 - Transforms camera pixels to Bird's-Eye View (BEV) ground metric coordinates $(X, Y)$ in meters.
@@ -141,7 +143,12 @@ safety/
 │           └── style.css             # High-contrast industrial dark theme
 ├── simulation/
 │   └── scenario_simulator.py         # Interactive multi-agent traffic simulator
+├── scripts/
+│   ├── setup_pi.sh                   # Automated Raspberry Pi 5 installer
+│   ├── setup_hotspot.sh              # Network hotspot configuration script
+│   └── test_model.py                 # YOLO accuracy & PPE benchmark tool
 ├── tests/
+│   ├── test_cv_detector.py           # YOLO detector, CLAHE & PPE tests
 │   ├── test_imu_processing.py        # IMU features & fall detection tests
 │   ├── test_lidar_driver.py          # TSD20 packet parsing & range tests
 │   ├── test_ekf_fusion.py            # BEV transform & EKF tests
@@ -156,42 +163,220 @@ safety/
 
 ---
 
-## 4. Quickstart Guide
+## 4. Complete Command Reference & Operations Guide
 
-### 4.1 Running in Interactive Simulation Mode (PC or Pi 5)
-You can run the full system immediately without any physical hardware connected:
+### 4.1 Raspberry Pi SSH Key Regeneration & Connection
 
+When setting up a fresh Raspberry Pi OS image, re-imaging the SD card, or when your client computer reports `WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!`, regenerate the SSH host keys on the Pi and clear old keys from your client.
+
+#### On the Raspberry Pi (Regenerate Host Keys):
 ```bash
-python run_simulation.py
+# 1. Remove old or invalid SSH host keys
+sudo rm -f /etc/ssh/ssh_host_*
+
+# 2. Regenerate brand-new host keys for all cipher suites (RSA, ECDSA, ED25519)
+sudo dpkg-reconfigure openssh-server
+
+# 3. Restart the SSH daemon
+sudo systemctl restart ssh
 ```
 
-Then open your browser to:
-```
-http://localhost:8080
-```
+#### On your Client PC (Windows PowerShell / macOS / Linux Terminal):
+If your computer throws a host key mismatch warning, clear the cached key for the Pi's IP:
+```powershell
+# Clear stale host key for your Pi's IP (e.g. 10.66.40.6 or 192.168.4.1)
+ssh-keygen -R <PI_IP_ADDRESS>
 
-Inside the dashboard:
-- View live dual camera streams (road camera with YOLO detection overlays and work-zone camera).
-- Watch the tactical 2D Bird's-Eye View (BEV) radar showing vehicle trajectories, workers, and LiDAR ranging beams.
-- Click the **Interactive Scenario Testing** buttons to test:
-  1. **Normal Passing Traffic** (Safe separation)
-  2. **Distracted Driver** (Vehicle drifts across safety cones towards worker $\to$ triggers `CRITICAL` siren and strobes)
-  3. **Worker Incursion** (Worker steps across boundary line into active traffic)
-  4. **Worker Down** (ESP32 reports `FALL_DETECTED` $\to$ triggers emergency alert)
+# Example:
+ssh-keygen -R 10.66.40.6
+
+# Connect to the Raspberry Pi
+ssh pi@<PI_IP_ADDRESS>
+```
 
 ---
 
-### 4.2 Running on Raspberry Pi 5 with Physical Hardware
+### 4.2 Raspberry Pi 5 System & Dependency Setup
 
-1. **Install Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. **Start the System**:
-   ```bash
-   python main.py --mode hardware
-   ```
-   The system will bind UDP ports `5005` (Worker) and `5006` (LiDAR), initialize cameras and GPIO pins, and start the web dashboard at port `8080`.
+#### Automated One-Command Setup:
+```bash
+cd ~/safety
+chmod +x scripts/setup_pi.sh
+./scripts/setup_pi.sh
+```
+
+#### Manual Setup Commands (Step-by-Step):
+```bash
+# 1. Update OS package lists
+sudo apt update && sudo apt upgrade -y
+
+# 2. Install essential system packages, Libcamera, OpenCV, and build tools
+sudo apt install -y \
+    python3-pip \
+    python3-venv \
+    python3-numpy \
+    python3-scipy \
+    python3-opencv \
+    python3-tornado \
+    python3-serial \
+    python3-yaml \
+    python3-picamera2 \
+    python3-libcamera \
+    libcamera-tools \
+    v4l-utils \
+    git \
+    sqlite3
+
+# 3. Grant user access to hardware peripherals (camera, GPIO, serial)
+sudo usermod -aG video,dialout,gpio $USER
+
+# 4. Create Python virtual environment with system site packages enabled
+cd ~/safety
+python3 -m venv --system-site-packages venv
+source venv/bin/activate
+
+# 5. Install PyTorch (ARM64 CPU-optimized, avoiding CUDA bloat) and Ultralytics
+pip install --upgrade pip
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+pip install ultralytics
+pip install -r requirements.txt
+```
+
+---
+
+### 4.3 Network & Wi-Fi Configuration
+
+```bash
+# Find Raspberry Pi IP address on local network:
+hostname -I
+
+# Detailed wlan0 wireless interface status:
+ip addr show wlan0
+
+# Configure automated standalone Wi-Fi Access Point (SAFETY_POLE_AP):
+chmod +x scripts/setup_hotspot.sh
+sudo ./scripts/setup_hotspot.sh
+
+# Or connect Raspberry Pi to a mobile hotspot / Wi-Fi network:
+sudo nmcli dev wifi connect "<WIFI_SSID>" password "<WIFI_PASSWORD>"
+```
+
+---
+
+### 4.4 Hardware Diagnostics & Camera Verification
+
+Test and verify the **Raspberry Pi Camera Module Rev 1.3 (OV5647 CSI)** before launching the AI safety pipeline:
+
+```bash
+# 1. Check if the camera ribbon cable and OV5647 sensor are detected by libcamera:
+rpicam-hello --list-cameras
+# Expected output: 0 : ov5647 [2592x1944 10-bit GBRG]
+
+# 2. Capture a test still image (verifies lens focus and exposure):
+rpicam-still -t 2000 -o test_cam.jpg
+
+# 3. Inspect video device nodes:
+v4l2-ctl --list-devices
+```
+
+---
+
+### 4.5 AI Model Accuracy, PPE & Latency Benchmarking
+
+Use the built-in benchmarking tool [`scripts/test_model.py`](file:///c:/Users/s%20shane%20gilbert/OneDrive/Desktop/safety/scripts/test_model.py) to measure detection accuracy, PPE vest verification, and inference FPS:
+
+```bash
+# Benchmark Raspberry Pi 5 MIPI CSI Camera (OV5647):
+source venv/bin/activate
+python scripts/test_model.py --source picam2
+
+# Benchmark USB Webcam (device index 0):
+python scripts/test_model.py --source 0
+
+# Benchmark synthetic scenario simulation:
+python scripts/test_model.py --source synthetic
+
+# Compare different YOLO models:
+python scripts/test_model.py --model yolov8s.pt --source picam2
+python scripts/test_model.py --model yolo11s.pt --source picam2
+python scripts/test_model.py --model yolov8n.pt --source picam2
+```
+
+---
+
+### 4.6 Running Automated Test Suites
+
+Verify all 19 system units (IMU, LiDAR, BEV homography, EKF, Risk, CLAHE, PPE verification, and end-to-end pipeline):
+
+```bash
+source venv/bin/activate
+python tests/run_all_tests.py
+```
+
+---
+
+### 4.7 Launching the System
+
+#### Mode 1: Physical Hardware Mode (Raspberry Pi 5 + Cameras + LiDAR + ESP32)
+Starts all live sensors, opens UDP ports `5005` (Worker) and `5006` (LiDAR), enables hardware GPIO warning strobes, and serves the dashboard:
+```bash
+source venv/bin/activate
+python main.py --mode hardware --port 8080
+```
+
+#### Mode 2: Auto Mode (Auto-detects Connected Hardware)
+Probes for physical camera and serial devices; automatically initializes available sensors and falls back gracefully:
+```bash
+source venv/bin/activate
+python main.py --mode auto
+```
+
+#### Mode 3: Interactive Simulation Mode (PC / Mac / Raspberry Pi)
+Runs the interactive multi-agent simulator without requiring any physical sensors or ESP32 hardware:
+```bash
+# One-click simulation launcher:
+python run_simulation.py
+
+# Or via main orchestrator:
+python main.py --mode simulation --port 8080
+```
+
+Open your browser to:
+```text
+http://localhost:8080
+# Or from another device on the same network:
+http://<PI_IP_ADDRESS>:8080
+```
+
+---
+
+### 4.8 Running as a Background System Service (Auto-Start on Boot)
+
+To run the Smart Work-Zone Safety Pole automatically whenever the Raspberry Pi powers on:
+
+```bash
+# 1. Copy the systemd unit file
+sudo cp systemd/safety_pole.service /etc/systemd/system/
+
+# 2. Reload systemd daemon
+sudo systemctl daemon-reload
+
+# 3. Enable service to start on system boot
+sudo systemctl enable safety_pole.service
+
+# 4. Start the service immediately
+sudo systemctl start safety_pole.service
+
+# 5. Check real-time service status:
+sudo systemctl status safety_pole.service
+
+# 6. View live streaming application logs:
+journalctl -u safety_pole.service -f
+
+# 7. Stop or restart the service:
+sudo systemctl stop safety_pole.service
+sudo systemctl restart safety_pole.service
+```
 
 ---
 
@@ -200,28 +385,12 @@ Inside the dashboard:
 ### 5.1 Worker Safety Badge (`firmware/esp32_worker/`)
 1. Open `firmware/esp32_worker/esp32_worker.ino` in Arduino IDE or VS Code PlatformIO.
 2. Select Board: **ESP32S3 Dev Module**.
-3. Edit `config.h` to set your WiFi SSID, Password, and Raspberry Pi IP address (`192.168.4.1`).
+3. Edit `config.h` to set your WiFi SSID, Password, and Raspberry Pi IP address (`192.168.4.1` or your network IP).
 4. Wire MPU6500: `SDA -> GPIO 8`, `SCL -> GPIO 9`, `VCC -> 3.3V`, `GND -> GND`.
-5. Upload to the ESP32-S3.
+5. Upload sketch to the ESP32-S3.
 
 ### 5.2 LiDAR Bridge (`firmware/esp32_lidar/`)
 1. Open `firmware/esp32_lidar/esp32_lidar.ino`.
 2. Wire TSD20 LiDAR: `TX -> GPIO 16 (RX2)`, `RX -> GPIO 17 (TX2)`, `5V -> 5V`, `GND -> GND`.
-3. Set WiFi credentials in `config.h` and upload.
+3. Set WiFi credentials in `config.h` and upload sketch.
 
----
-
-## 6. Running Tests
-
-Run the complete automated test suite verifying all modules:
-
-```bash
-python tests/run_all_tests.py
-```
-
-All 12 test suites will run and report:
-- IMU feature calculations and fall detection state machine
-- TSD20 LiDAR parsing and range rate filtering
-- BEV homography consistency and EKF state updates
-- Collision risk calculations (TTC, CPA, and vulnerability weighting)
-- Full end-to-end perception-to-warning pipeline
