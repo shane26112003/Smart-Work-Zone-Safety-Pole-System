@@ -109,7 +109,11 @@ void setup() {
     delay(100);
     WiFi.mode(WIFI_STA);
     WiFi.setSleep(false); // Disable modem sleep for ultra-low latency UDP
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    if (strlen(WIFI_PASSWORD) > 0) {
+        WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    } else {
+        WiFi.begin(WIFI_SSID); // Open network (no password)
+    }
     
     int retries = 0;
     while (WiFi.status() != WL_CONNECTED && retries < 30) {

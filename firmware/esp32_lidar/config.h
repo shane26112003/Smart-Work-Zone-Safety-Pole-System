@@ -9,8 +9,8 @@
 #define LIDAR_SENSOR_ID "TSD20_ROAD_01"
 
 // ==================== WI-FI SETTINGS ====================
-#define WIFI_SSID     "SAFETY_POLE_AP"
-#define WIFI_PASSWORD "SafetyZone2026!"
+#define WIFI_SSID     "realme NARZO 70 Turbo 5G"
+#define WIFI_PASSWORD ""
 
 // Raspberry Pi 5 Host IP and Dedicated LiDAR UDP Port
 #define RPI_IP_ADDRESS "10.66.40.6"

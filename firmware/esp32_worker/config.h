@@ -10,8 +10,8 @@
 
 // ==================== WI-FI SETTINGS ====================
 // Replace with your Work-Zone Safety Pole Access Point or Hotspot
-#define WIFI_SSID     "SAFETY_POLE_AP"
-#define WIFI_PASSWORD "SafetyZone2026!"
+#define WIFI_SSID     "realme NARZO 70 Turbo 5G"
+#define WIFI_PASSWORD ""
 
 // Raspberry Pi 5 IP Address and UDP Port
 #define RPI_IP_ADDRESS "10.66.40.6"  // Phone hotspot IP for Pi 5
