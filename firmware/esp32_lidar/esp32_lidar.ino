@@ -158,8 +158,11 @@ void loop() {
         }
     }
 
-    // Wi-Fi check
-    if (WiFi.status() != WL_CONNECTED && (now % 5000 < 50)) {
+    // Non-blocking Wi-Fi reconnect check every 10 seconds
+    static unsigned long lastReconnectAttempt = 0;
+    if (WiFi.status() != WL_CONNECTED && (now - lastReconnectAttempt >= 10000)) {
+        lastReconnectAttempt = now;
+        Serial.println("[WIFI] Reconnecting...");
         WiFi.reconnect();
     }
 }

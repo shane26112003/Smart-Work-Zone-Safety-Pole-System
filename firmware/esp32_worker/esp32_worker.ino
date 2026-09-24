@@ -157,8 +157,11 @@ void loop() {
         checkIncomingWarnings();
     }
 
-    // 3. Wi-Fi Reconnect Handling
-    if (WiFi.status() != WL_CONNECTED && (now % 5000 < 50)) {
+    // 3. Non-blocking Wi-Fi Reconnect Handling (every 10s)
+    static unsigned long lastReconnectAttempt = 0;
+    if (WiFi.status() != WL_CONNECTED && (now - lastReconnectAttempt >= 10000)) {
+        lastReconnectAttempt = now;
+        Serial.println("[WIFI] Reconnecting to AP...");
         WiFi.reconnect();
     }
 }
