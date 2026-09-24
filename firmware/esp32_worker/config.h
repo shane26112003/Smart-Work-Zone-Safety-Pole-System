@@ -14,7 +14,7 @@
 #define WIFI_PASSWORD "SafetyZone2026!"
 
 // Raspberry Pi 5 IP Address and UDP Port
-#define RPI_IP_ADDRESS "192.168.4.1"  // Default AP IP or static IP on local LAN
+#define RPI_IP_ADDRESS "10.66.40.6"  // Phone hotspot IP for Pi 5
 #define UDP_PORT       5005
 
 // ==================== HARDWARE PINOUTS ====================

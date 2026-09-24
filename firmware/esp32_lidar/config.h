@@ -13,7 +13,7 @@
 #define WIFI_PASSWORD "SafetyZone2026!"
 
 // Raspberry Pi 5 Host IP and Dedicated LiDAR UDP Port
-#define RPI_IP_ADDRESS "192.168.4.1"
+#define RPI_IP_ADDRESS "10.66.40.6"
 #define LIDAR_UDP_PORT 5006
 
 // ==================== HARDWARE PINOUTS ====================
