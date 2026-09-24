@@ -78,8 +78,21 @@ An AI-powered smart safety pole system for road construction and work zones, des
 
 ### 2.3 Road LiDAR (TSD20 ToF LiDAR + ESP32 Bridge)
 - Long-range time-of-flight LiDAR aimed along the road approach line.
-- Measures closing vehicle distance (0.1m - 20m) and range rate ($\dot{r}$).
-- Transmits data at 50 Hz over Wi-Fi UDP to RPi 5 port `5006` (or direct UART).
+- Measures closing vehicle distance (0.1m - 20m) and range rate ($\dot{r} = v_y$).
+- Transmits data at 50 Hz over Wi-Fi UDP to RPi 5 port `5006` (or direct UART / USB Serial).
+
+#### Where the LiDAR is Used Across the System:
+1. **Sensor Ingestion Driver ([src/sensors/lidar_tsd20.py](src/sensors/lidar_tsd20.py))**: Runs on a background 50 Hz thread, ingesting distance packets via Wi-Fi UDP (port `5006`), UART/USB Serial (`/dev/ttyUSB0`), or synthetic simulation.
+2. **Multi-Sensor EKF Fusion ([src/fusion/ekf_fusion.py](src/fusion/ekf_fusion.py))**: Fuses camera 2D detections with high-precision LiDAR depth ($R_{\text{lidar}} = \text{diag}([0.05, 0.2])$ vs Camera $R_{\text{cam}} = \text{diag}([0.6, 1.2])$). Eliminates longitudinal perspective uncertainty and provides verified closure velocity.
+3. **Collision-Risk Assessment ([src/risk/risk_engine.py](src/risk/risk_engine.py))**: Calculates stable Time-To-Collision ($\text{TTC} = \frac{d}{v}$) using the LiDAR-verified velocity vector, triggering instant `CRITICAL` alarms if a vehicle approaches too quickly.
+4. **Application Orchestrator ([main.py](main.py))**: Injects LiDAR readings into the EKF and streams live telemetry to the web dashboard.
+
+#### LiDAR on the Web Dashboard & Troubleshooting:
+- **Location on Screen**: Displayed on the **Center Column (Work-Zone Tactical Radar)** in the bottom-left overlay box (`TSD20 LiDAR: <dist>m | Range Rate: <rate> m/s`), with a red dashed laser ray projecting out to target vehicles.
+- **Why it shows `-- m` (Pending / Inactive)**:
+  - **No UDP packets received yet**: In default Wi-Fi mode (`SOURCE_TYPE = "wifi"`), the Pi listens on UDP port `5006`. If the ESP32 is powered off or not streaming, `valid` is False and the UI shows `--`.
+  - **Connected via Serial Cable**: If the LiDAR is connected to USB serial (`/dev/ttyUSB0`) instead of Wi-Fi, run with `--lidar-source serial`.
+  - **Target Out-of-Range (> 20 Meters)**: The physical optical limit of the TSD20 is 20.0m. In simulation, approaching cars start at 55m; the LiDAR reading activates once the car reaches $\le 20.0\text{ m}$.
 
 ### 2.4 AI Computer Vision & Tracking
 - **Detector**: High-precision YOLOv8 / YOLO11 (`yolov8s.pt`, 44.9 mAP, with automatic fallbacks to `yolo11s.pt` or `yolov8n.pt`) with real-time PyTorch CPU 4-thread execution for Raspberry Pi 5.
@@ -339,6 +352,12 @@ python main.py --camera-source picam2
 
 # Or specify a USB webcam (device index 0):
 python main.py --camera-source 0
+
+# Connect TSD20 LiDAR via USB Serial adapter (/dev/ttyUSB0):
+python main.py --lidar-source serial
+
+# Connect TSD20 LiDAR via Wi-Fi UDP (port 5006, default):
+python main.py --lidar-source wifi
 
 # Specify custom YOLO model weights and port:
 python main.py --camera-source picam2 --model yolov8s.pt --port 8080
