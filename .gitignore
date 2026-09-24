@@ -50,6 +50,10 @@ desktop.ini
 .pytest_cache/
 .coverage
 htmlcov/
+output_*.jpg
+*.jpg
+!assets/*.jpg
+!docs/*.jpg
 
 # Large Model Weights (dynamically fetched on demand by Ultralytics)
 *.pt

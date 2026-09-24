@@ -208,24 +208,26 @@ class SafetyPoleSystem:
         for trk in tracks:
             x1, y1, x2, y2 = trk.bbox
             is_veh = (trk.class_name == "vehicle")
-            color = (0, 140, 255) if is_veh else (0, 255, 0)
-            if not is_veh and not getattr(trk, "ppe_verified", True):
-                color = (0, 165, 255) # Orange border for unverified / pedestrian
+            conf_pct = int(trk.confidence * 100)
+
+            if is_veh:
+                color = (0, 140, 255) # High-visibility Amber/Orange for vehicles
+                sub = getattr(trk, "subclass", "")
+                label = f"{sub.upper() or 'VEHICLE'} #{trk.track_id} ({conf_pct}%)"
+            else:
+                # Always identify detected humans as WORKERS
+                if trk.associated_worker_id:
+                    color = (0, 255, 0)
+                    label = f"👷 {trk.associated_worker_id} ({conf_pct}%)"
+                elif getattr(trk, "ppe_verified", False):
+                    color = (0, 255, 0) # Bright Green for verified PPE
+                    label = f"👷 WORKER #{trk.track_id} [PPE ✓] ({conf_pct}%)"
+                else:
+                    color = (50, 205, 50) # Tactical Lime Green
+                    label = f"👷 WORKER #{trk.track_id} ({conf_pct}%)"
 
             # Bounding box
             cv2.rectangle(out, (x1, y1), (x2, y2), color, 2)
-            
-            # Subclass label formatting
-            sub = getattr(trk, "subclass", "")
-            conf_pct = int(trk.confidence * 100)
-            if trk.associated_worker_id:
-                label = f"👷 {trk.associated_worker_id} ({conf_pct}%)"
-            elif is_veh:
-                label = f"{sub.upper() or 'VEHICLE'} #{trk.track_id} ({conf_pct}%)"
-            elif getattr(trk, "ppe_verified", False):
-                label = f"👷 WORKER #{trk.track_id} [PPE ✓] ({conf_pct}%)"
-            else:
-                label = f"⚠️ PEDESTRIAN #{trk.track_id} ({conf_pct}%)"
 
             lbl_w = max(90, len(label) * 9 + 10)
             cv2.rectangle(out, (x1, max(0, y1 - 22)), (x1 + lbl_w, y1), color, -1)

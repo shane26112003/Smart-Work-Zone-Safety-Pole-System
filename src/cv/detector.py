@@ -164,13 +164,23 @@ class ObjectDetector:
     def enhance_contrast(frame: np.ndarray) -> np.ndarray:
         """
         Enhances low-contrast or hazy camera frames from OV5647 Rev 1.3
-        using Luminance CLAHE (Contrast-Limited Adaptive Histogram Equalization).
+        using Luminance CLAHE, only if lighting conditions genuinely require it.
         """
         try:
+            # Check dynamic range of frame
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            std_dev = float(np.std(gray))
+
+            # If frame has healthy dynamic range, do not apply CLAHE
+            # to preserve natural textures and prevent sensor noise amplification
+            if not getattr(CONFIG.cv, "ENABLE_ENHANCEMENT", False):
+                if not getattr(CONFIG.cv, "ADAPTIVE_CLAHE", True) or std_dev >= 18.0:
+                    return frame
+
             lab = cv2.cvtColor(frame, cv2.COLOR_BGR2LAB)
             l, a, b = cv2.split(lab)
             clahe = cv2.createCLAHE(
-                clipLimit=getattr(CONFIG.cv, "CLAHE_CLIP_LIMIT", 2.0),
+                clipLimit=getattr(CONFIG.cv, "CLAHE_CLIP_LIMIT", 1.5),
                 tileGridSize=(8, 8)
             )
             l_enhanced = clahe.apply(l)
@@ -202,14 +212,14 @@ class ObjectDetector:
         torso_hsv = hsv[torso_y1:torso_y2, :]
         torso_area = max(1, torso_hsv.shape[0] * torso_hsv.shape[1])
 
-        # Fluorescent Safety Orange / Amber (H: 5-25, S: 85-255, V: 85-255)
-        mask_orange = cv2.inRange(torso_hsv, np.array([5, 85, 85]), np.array([25, 255, 255]))
+        # Fluorescent Safety Orange / Amber (H: 5-25, S: 80-255, V: 80-255)
+        mask_orange = cv2.inRange(torso_hsv, np.array([5, 80, 80]), np.array([25, 255, 255]))
 
-        # Fluorescent Safety Yellow-Green / Lime (H: 26-48, S: 70-255, V: 85-255)
-        mask_lime = cv2.inRange(torso_hsv, np.array([26, 70, 85]), np.array([48, 255, 255]))
+        # Fluorescent Safety Yellow-Green / Lime (H: 26-48, S: 65-255, V: 80-255)
+        mask_lime = cv2.inRange(torso_hsv, np.array([26, 65, 80]), np.array([48, 255, 255]))
 
-        # Reflective high-luminance strips (V > 195, S < 55)
-        mask_reflective = cv2.inRange(torso_hsv, np.array([0, 0, 195]), np.array([180, 55, 255]))
+        # Reflective high-luminance strips (V > 190, S < 60)
+        mask_reflective = cv2.inRange(torso_hsv, np.array([0, 0, 190]), np.array([180, 60, 255]))
 
         combined_vest = cv2.bitwise_or(mask_orange, cv2.bitwise_or(mask_lime, mask_reflective))
         vest_pixels = np.count_nonzero(combined_vest)
@@ -220,37 +230,36 @@ class ObjectDetector:
         head_area = max(1, head_hsv.shape[0] * head_hsv.shape[1])
 
         # Yellow / White / Orange hard hat masks
-        mask_helmet_yellow = cv2.inRange(head_hsv, np.array([20, 80, 90]), np.array([38, 255, 255]))
-        mask_helmet_orange = cv2.inRange(head_hsv, np.array([5, 90, 90]), np.array([19, 255, 255]))
-        mask_helmet_white = cv2.inRange(head_hsv, np.array([0, 0, 180]), np.array([180, 45, 255]))
+        mask_helmet_yellow = cv2.inRange(head_hsv, np.array([20, 75, 85]), np.array([38, 255, 255]))
+        mask_helmet_orange = cv2.inRange(head_hsv, np.array([5, 85, 85]), np.array([19, 255, 255]))
+        mask_helmet_white = cv2.inRange(head_hsv, np.array([0, 0, 175]), np.array([180, 50, 255]))
         combined_helmet = cv2.bitwise_or(mask_helmet_yellow, cv2.bitwise_or(mask_helmet_orange, mask_helmet_white))
         helmet_ratio = np.count_nonzero(combined_helmet) / head_area
 
         # Composite PPE score (0.0 to 1.0)
         ppe_score = round(min(1.0, (vest_ratio * 2.2 + helmet_ratio * 0.8)), 2)
         min_ratio = getattr(CONFIG.cv, "PPE_MIN_RATIO", 0.05)
-        has_ppe = (vest_ratio >= min_ratio or helmet_ratio >= 0.15 or ppe_score >= 0.12)
+        has_ppe = (vest_ratio >= min_ratio or helmet_ratio >= 0.12 or ppe_score >= 0.10)
 
         subcat = "worker_ppe" if has_ppe else "worker_no_ppe"
         return has_ppe, ppe_score, subcat
 
     def _detect_yolo(self, frame: np.ndarray) -> List[Detection]:
-        """Runs YOLO neural inference on sanitized frame."""
+        """Runs YOLO neural inference on sanitized frame with class-specific filters."""
         detections: List[Detection] = []
         h, w = frame.shape[:2]
 
         try:
-            # Apply CLAHE contrast enhancement for low-contrast OV5647 frames
-            input_frame = frame
-            if getattr(CONFIG.cv, "ENABLE_ENHANCEMENT", True):
-                input_frame = self.enhance_contrast(frame)
+            input_frame = self.enhance_contrast(frame)
 
-            target_classes = CONFIG.cv.WORKER_CLASSES + CONFIG.cv.VEHICLE_CLASSES
+            target_classes = CONFIG.cv.WORKER_CLASSES + CONFIG.cv.VEHICLE_CLASSES + getattr(CONFIG.cv, "BICYCLE_CLASSES", [])
             img_size = getattr(CONFIG.cv, "IMAGE_SIZE", 640)
 
+            # Query YOLO with sensitive base threshold
+            min_conf = min(getattr(CONFIG.cv, "WORKER_CONF_THRESHOLD", 0.28), 0.25)
             results = self.model.predict(
                 source=input_frame,
-                conf=self.conf_threshold,
+                conf=min_conf,
                 iou=CONFIG.cv.IOU_THRESHOLD,
                 classes=target_classes,
                 imgsz=img_size,
@@ -271,28 +280,38 @@ class ObjectDetector:
                     x2 = max(x1 + 1, min(w, x2))
                     y2 = max(y1 + 1, min(h, y2))
 
+                    bw = x2 - x1
+                    bh = y2 - y1
+                    area = bw * bh
                     cx = int((x1 + x2) / 2)
                     cy = int((y1 + y2) / 2)
                     bc = (cx, y2)
 
-                    # Classification logic
+                    # ---------------------------------------------------------
+                    # 1. WORKER DETECTION (COCO Class 0: person)
+                    # ---------------------------------------------------------
                     if cls_id in CONFIG.cv.WORKER_CLASSES:
-                        # Person detected - evaluate Work-Zone PPE
+                        worker_thresh = getattr(CONFIG.cv, "WORKER_CONF_THRESHOLD", 0.28)
+                        if conf < worker_thresh:
+                            continue
+                        # Worker height sanity filter
+                        min_h = getattr(CONFIG.cv, "WORKER_MIN_HEIGHT_PX", 35)
+                        if bh < min_h:
+                            continue
+                        # Worker aspect ratio (must be vertical: height >= 0.70 * width)
+                        min_aspect = getattr(CONFIG.cv, "WORKER_MIN_ASPECT_RATIO", 0.70)
+                        if (bh / max(1, bw)) < min_aspect:
+                            continue
+
+                        # Evaluate Work-Zone PPE (Safety Vest & Hard Hat)
                         crop = frame[y1:y2, x1:x2]
                         has_ppe, ppe_score, subcat = self.verify_worker_ppe(crop)
-
-                        strict_mode = getattr(CONFIG.cv, "STRICT_PPE_MODE", False)
-                        if not has_ppe and strict_mode:
-                            c_name = "worker" # Keep worker for fusion engine compatibility
-                            subcat = "pedestrian"
-                        else:
-                            c_name = "worker"
 
                         detections.append(Detection(
                             bbox=(x1, y1, x2, y2),
                             confidence=round(conf, 2),
                             class_id=cls_id,
-                            class_name=c_name,
+                            class_name="worker",
                             subclass=subcat,
                             ppe_verified=has_ppe,
                             ppe_confidence=ppe_score,
@@ -300,7 +319,26 @@ class ObjectDetector:
                             bottom_center=bc
                         ))
 
+                    # ---------------------------------------------------------
+                    # 2. MOTOR VEHICLE DETECTION (Classes: 2=car, 3=motorcycle, 5=bus, 7=truck)
+                    # ---------------------------------------------------------
                     elif cls_id in CONFIG.cv.VEHICLE_CLASSES:
+                        veh_thresh = getattr(CONFIG.cv, "VEHICLE_CONF_THRESHOLD", 0.45)
+                        if conf < veh_thresh:
+                            continue
+                        # Bounding box size sanity filters (stops tiny noise specks from being called vehicles)
+                        min_w = getattr(CONFIG.cv, "VEHICLE_MIN_WIDTH_PX", 30)
+                        min_h = getattr(CONFIG.cv, "VEHICLE_MIN_HEIGHT_PX", 24)
+                        min_a = getattr(CONFIG.cv, "VEHICLE_MIN_AREA_PX", 750)
+                        if bw < min_w or bh < min_h or area < min_a:
+                            continue
+                        # Vehicle aspect ratio sanity: vehicles are horizontal (0.55 <= w/h <= 4.0)
+                        aspect = bw / max(1, bh)
+                        min_asp = getattr(CONFIG.cv, "VEHICLE_MIN_ASPECT_RATIO", 0.55)
+                        max_asp = getattr(CONFIG.cv, "VEHICLE_MAX_ASPECT_RATIO", 4.0)
+                        if aspect < min_asp or aspect > max_asp:
+                            continue
+
                         subcat = self.COCO_SUBCLASS_MAP.get(cls_id, "vehicle")
                         detections.append(Detection(
                             bbox=(x1, y1, x2, y2),
@@ -308,6 +346,28 @@ class ObjectDetector:
                             class_id=cls_id,
                             class_name="vehicle",
                             subclass=subcat,
+                            ppe_verified=False,
+                            ppe_confidence=0.0,
+                            center=(cx, cy),
+                            bottom_center=bc
+                        ))
+
+                    # ---------------------------------------------------------
+                    # 3. BICYCLE DETECTION (COCO Class 1)
+                    # ---------------------------------------------------------
+                    elif cls_id in getattr(CONFIG.cv, "BICYCLE_CLASSES", []):
+                        bike_thresh = getattr(CONFIG.cv, "BICYCLE_CONF_THRESHOLD", 0.50)
+                        if conf < bike_thresh:
+                            continue
+                        if bh < 40 or bw < 25 or area < 1000:
+                            continue
+
+                        detections.append(Detection(
+                            bbox=(x1, y1, x2, y2),
+                            confidence=round(conf, 2),
+                            class_id=cls_id,
+                            class_name="vehicle",
+                            subclass="bicycle",
                             ppe_verified=False,
                             ppe_confidence=0.0,
                             center=(cx, cy),

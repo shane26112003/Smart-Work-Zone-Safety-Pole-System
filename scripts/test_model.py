@@ -32,7 +32,7 @@ def test_model(source: str, model_path: str, save_output: bool = True, iteration
     print(f"[1/4] Initializing Detector with model: {model_path}...")
     detector = ObjectDetector(model_path=model_path)
     print(f"      Active Model: {detector.active_model_name}")
-    print(f"      Confidence Threshold: {detector.conf_threshold}")
+    print(f"      Confidence Thresholds: Worker={getattr(CONFIG.cv, 'WORKER_CONF_THRESHOLD', 0.28)}, Vehicle={getattr(CONFIG.cv, 'VEHICLE_CONF_THRESHOLD', 0.45)}")
     print(f"      Target Classes: Workers={CONFIG.cv.WORKER_CLASSES}, Vehicles={CONFIG.cv.VEHICLE_CLASSES}")
 
     print(f"\n[2/4] Ingesting test frame from source: '{source}'...")

@@ -57,26 +57,44 @@ class CVConfig:
     # Model configuration: yolov8s.pt (high accuracy, 44.9 mAP) with automated fallbacks (yolo11s/yolov8n)
     MODEL_PATH: str = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "yolov8s.pt")
     FALLBACK_MODEL_PATH: str = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "yolov8n.pt")
-    CONFIDENCE_THRESHOLD: float = 0.25    # Lowered to 0.25 for early detection of distant vehicles and workers
+    CONFIDENCE_THRESHOLD: float = 0.25    # Base threshold
     IOU_THRESHOLD: float = 0.45
     IMAGE_SIZE: int = 640                 # Inference resolution (matching camera width)
 
-    # Image enhancement for Raspberry Pi OV5647 CSI camera (contrast & low-light handling)
-    ENABLE_ENHANCEMENT: bool = True
-    CLAHE_CLIP_LIMIT: float = 2.0
+    # Class-Specific Confidence Thresholds (prevents small object noise from triggering false vehicle detections)
+    WORKER_CONF_THRESHOLD: float = 0.28   # Sensitive threshold for workers (standing, bending, walking)
+    VEHICLE_CONF_THRESHOLD: float = 0.45  # Higher threshold for vehicles to eliminate false detections on small specks
+    BICYCLE_CONF_THRESHOLD: float = 0.50  # Strict threshold if bicycles are present
+
+    # Minimum Geometric Size Filters (prevents small background objects from being classified as vehicles)
+    VEHICLE_MIN_WIDTH_PX: int = 30        # Vehicle must be at least 30 px wide
+    VEHICLE_MIN_HEIGHT_PX: int = 24       # Vehicle must be at least 24 px high
+    VEHICLE_MIN_AREA_PX: int = 750        # Minimum pixel area for a valid vehicle (eliminates small debris/objects)
+    VEHICLE_MIN_ASPECT_RATIO: float = 0.55 # Width / Height (vehicles are horizontal)
+    VEHICLE_MAX_ASPECT_RATIO: float = 4.0  # Width / Height upper bound
+
+    # Worker Geometric Sanity Filters
+    WORKER_MIN_HEIGHT_PX: int = 35        # A person must be at least 35 px tall
+    WORKER_MIN_ASPECT_RATIO: float = 0.70 # Height / Width (people are upright)
+
+    # Image enhancement (Adaptive CLAHE only for extremely dark or washed-out lighting)
+    ENABLE_ENHANCEMENT: bool = False       # Disabled by default to prevent sensor noise amplification
+    ADAPTIVE_CLAHE: bool = True           # Automatically activates only if frame dynamic range < 18
+    CLAHE_CLIP_LIMIT: float = 1.5
 
     # Intelligent Worker PPE Verification (High-Vis Vest & Hard Hat detection)
     ENABLE_PPE_CHECK: bool = True
     PPE_MIN_RATIO: float = 0.05           # Minimum high-vis vest color ratio in upper body
-    STRICT_PPE_MODE: bool = False         # If True, persons without PPE are classified as 'pedestrian'
+    STRICT_PPE_MODE: bool = False         # Keep False so all detected people are identified as WORKERS
 
-    # COCO Class IDs: 0=person, 1=bicycle, 2=car, 3=motorcycle, 5=bus, 7=truck
+    # COCO Class IDs: 0=person, 2=car, 3=motorcycle, 5=bus, 7=truck (Class 1 bicycle optional)
     WORKER_CLASSES: List[int] = field(default_factory=lambda: [0])
-    VEHICLE_CLASSES: List[int] = field(default_factory=lambda: [1, 2, 3, 5, 7])
+    VEHICLE_CLASSES: List[int] = field(default_factory=lambda: [2, 3, 5, 7])
+    BICYCLE_CLASSES: List[int] = field(default_factory=lambda: [1])
 
     # Tracking parameters
     TRACK_MAX_AGE_FRAMES: int = 30
-    TRACK_MIN_HITS: int = 2               # Reduced to 2 for faster track initiation
+    TRACK_MIN_HITS: int = 2               # 2 hits for fast track initiation without lag
 
 
 @dataclass
