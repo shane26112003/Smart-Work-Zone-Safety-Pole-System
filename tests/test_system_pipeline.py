@@ -17,53 +17,56 @@ from src.warning.event_logger import EventLogger
 
 def test_full_pipeline_step():
     """Executes a complete perception-to-warning iteration."""
-    # 1. Sensors
     cam_mgr = CameraManager()
-    cam_mgr.start()
-    lidar = LidarTSD20(mode="mock")
-    worker_rx = WorkerReceiver(port=5996)
-
-    # Inject worker state
-    worker_rx.inject_worker_state(WorkerState(
-        worker_id="WORKER_01",
-        motion_state="STATIC",
-        x=-3.0, y=4.0
-    ))
-
-    # Inject LiDAR reading
-    lidar.inject_reading(distance_m=15.0, range_rate_mps=-10.0, valid=True)
-
-    # 2. Perception & Fusion
-    detector = ObjectDetector()
-    tracker = MultiObjectTracker()
-    bev = BEVTransform()
-    fusion = SensorFusionEngine(bev)
-    risk_engine = RiskEngine()
     alert_ctrl = AlertController()
-    logger = EventLogger()
+    worker_rx = WorkerReceiver(port=5996)
+    lidar = LidarTSD20(mode="mock")
 
-    time.sleep(0.15) # Allow camera frame buffer to warm up
-    road_frame = cam_mgr.get_road_frame()
-    assert road_frame is not None
+    try:
+        # 1. Perception & Fusion Engine initialization
+        cam_mgr.start()
+        detector = ObjectDetector()
+        tracker = MultiObjectTracker()
+        bev = BEVTransform()
+        fusion = SensorFusionEngine(bev)
+        risk_engine = RiskEngine()
+        logger = EventLogger()
 
-    # Detect
-    detections = detector.detect(road_frame)
-    tracks = tracker.update(detections)
+        # 2. Inject fresh worker state and LiDAR reading
+        worker_rx.inject_worker_state(WorkerState(
+            worker_id="WORKER_01",
+            motion_state="STATIC",
+            x=-3.0, y=4.0,
+            last_seen=time.time()
+        ))
+        lidar.inject_reading(distance_m=15.0, range_rate_mps=-10.0, valid=True)
 
-    # Fuse
-    reading = lidar.get_latest_reading()
-    workers = worker_rx.get_all_active_workers()
-    entities = fusion.fuse(tracks, reading, workers)
-    assert len(entities) >= 1
+        # 3. Ingest camera frame
+        time.sleep(0.2) # Allow frame capture
+        road_frame = cam_mgr.get_road_frame()
+        assert road_frame is not None
 
-    # Evaluate Risk
-    assessment = risk_engine.evaluate(entities)
-    assert assessment.overall_level in ["SAFE", "CAUTION", "HIGH RISK", "CRITICAL"]
+        # 4. Detect & Track
+        detections = detector.detect(road_frame)
+        tracks = tracker.update(detections)
 
-    # Actuator Update & Event Log
-    alert_ctrl.update(assessment)
-    logger.log_assessment(assessment)
+        # 5. Fuse Multi-Sensor Inputs
+        reading = lidar.get_latest_reading()
+        workers = worker_rx.get_all_active_workers()
+        entities = fusion.fuse(tracks, reading, workers)
+        assert len(entities) >= 1
 
-    # Cleanup
-    cam_mgr.stop()
-    alert_ctrl.stop()
+        # 6. Evaluate Risk
+        assessment = risk_engine.evaluate(entities)
+        assert assessment.overall_level in ["SAFE", "CAUTION", "HIGH RISK", "CRITICAL"]
+
+        # 7. Actuator Update & Event Log
+        alert_ctrl.update(assessment)
+        logger.log_assessment(assessment)
+
+    finally:
+        # Guarantee clean cleanup of all background threads
+        cam_mgr.stop()
+        alert_ctrl.stop()
+        worker_rx.stop()
+        lidar.stop()

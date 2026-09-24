@@ -33,7 +33,7 @@ class LidarConfig:
 class WorkerTagConfig:
     """Worker Module (ESP32-S3 + MPU6500) settings."""
     DEFAULT_WORKER_ID: str = "WORKER_01"
-    HEARTBEAT_TIMEOUT_SEC: float = 3.0   # Drop worker track if no telemetry for 3s
+    HEARTBEAT_TIMEOUT_SEC: float = 5.0   # Drop worker track if no telemetry for 5s
     BLE_TX_POWER_1M: float = -59.0       # Calibrated RSSI at 1 meter (A parameter)
     BLE_PATH_LOSS_EXPONENT: float = 2.4  # Environmental path loss exponent (n parameter)
     IMU_FALL_SVM_THRESHOLD: float = 3.0  # Impact G-force threshold for fall detection
