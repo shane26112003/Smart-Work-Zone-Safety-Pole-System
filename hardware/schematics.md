@@ -72,13 +72,13 @@ Each worker carries a wearable safety badge powered by a rechargeable 3.7V LiPo 
 Mounted on the road-facing arm of the Safety Pole, aimed at approaching traffic.
 
 ```
-       ESP32 Node                      TSD20 LiDAR
+       ESP32 Node                      TSD20 LiDAR (3.3V)
      ┌───────────┐                    ┌───────────┐
-     │        5V ├────────────────────┤ VCC (5V)  │
+     │      3.3V ├────────────────────┤ VCC (3.3V)│
      │       GND ├────────────────────┤ GND       │
      │   GPIO 16 ├──────[RX2]◄────────┤ TX        │
      │   GPIO 17 ├──────[TX2]────────►┤ RX        │
      └───────────┘                    └───────────┘
 ```
 
-*Note: The ESP32 streams the parsed distance frames at 50Hz over Wi-Fi UDP to port 5006 on the Raspberry Pi 5.*
+*Note: With 3.3V power, UART logic levels match the ESP32 natively (no level-shifter needed). The ESP32 streams the parsed distance frames at 50Hz over Wi-Fi UDP to port 5006 on the Raspberry Pi 5.*
