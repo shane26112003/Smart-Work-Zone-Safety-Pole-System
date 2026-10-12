@@ -1,18 +1,24 @@
 #!/usr/bin/env python3
 """
-Real-Time Hardware Evaluation & Benchmarking Tool.
+Real-Time Hardware Evaluation & Benchmarking Tool with Live Video Output.
 Evaluates YOLO object detection, LiDAR-Camera fusion, ESP32-S3 IMU telemetry,
 and Collision Risk models using live sensor data streams.
 
+Supports:
+  1. Live Interactive Video Display Window (--display)
+  2. Annotated Output Video Recording (--record)
+  3. Pre-recorded Traffic Video Ingestion (--camera path/to/video.mp4)
+  4. Real Hardware Live Streaming (Pi CSI 'picam2', USB '0', ESP32 UDP sensors)
+
 Usage:
-  # On Raspberry Pi 5 with Pi Camera Module & ESP32 sensors:
-  python scripts/evaluate_realtime.py --camera picam2 --duration 30
+  # Watch live video with bounding boxes & hazard overlay on screen:
+  python scripts/evaluate_realtime.py --camera picam2 --display
 
-  # With USB Webcam (device index 0):
-  python scripts/evaluate_realtime.py --camera 0 --duration 30
+  # Record output video to .mp4 while evaluating:
+  python scripts/evaluate_realtime.py --camera picam2 --record --duration 30
 
-  # With pre-recorded road footage video:
-  python scripts/evaluate_realtime.py --camera path/to/road_test.mp4 --duration 60
+  # Display and Record simultaneously on pre-recorded video:
+  python scripts/evaluate_realtime.py --camera test_traffic.mp4 --display --record
 """
 
 import sys
@@ -43,22 +49,27 @@ def run_realtime_evaluation(
     model_path: str,
     duration_sec: float = 30.0,
     save_dir: str = "eval_results",
-    save_snapshots: bool = True
+    save_snapshots: bool = True,
+    display: bool = False,
+    record: bool = False
 ):
+    timestamp_str = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    os.makedirs(save_dir, exist_ok=True)
+    snapshot_dir = os.path.join(save_dir, "snapshots")
+    if save_snapshots:
+        os.makedirs(snapshot_dir, exist_ok=True)
+
     print("=" * 70)
     print(" SMART WORK-ZONE SAFETY POLE - REAL-TIME HARDWARE EVALUATION ")
     print("=" * 70)
     print(f" Camera Source:       {camera_source}")
     print(f" YOLO Model:          {model_path}")
     print(f" Evaluation Duration: {'Continuous (Ctrl+C to stop)' if duration_sec <= 0 else f'{duration_sec:.1f} seconds'}")
+    print(f" Live Video Window:   {'ENABLED (Press Q/ESC in window to exit)' if display else 'Disabled (Use --display to show)'}")
+    print(f" Video Recording:     {'ENABLED (.mp4 output)' if record else 'Disabled (Use --record to save)'}")
     print(f" Sensor Ports:        LiDAR UDP 5006 | Worker UDP 5005")
     print(f" Output Directory:    {save_dir}")
     print("=" * 70)
-
-    os.makedirs(save_dir, exist_ok=True)
-    snapshot_dir = os.path.join(save_dir, "snapshots")
-    if save_snapshots:
-        os.makedirs(snapshot_dir, exist_ok=True)
 
     # 1. Initialize Hardware Ingestion & AI Perception Layers
     print("[1/5] Initializing Sensors & Vision Pipelines...")
@@ -70,6 +81,18 @@ def run_realtime_evaluation(
     bev = BEVTransform(CONFIG.camera.FRAME_WIDTH, CONFIG.camera.FRAME_HEIGHT)
     fusion = SensorFusionEngine(bev)
     risk_engine = RiskEngine()
+
+    # Video Recorder Setup
+    video_writer = None
+    output_video_path = None
+    if record:
+        output_video_path = os.path.join(save_dir, f"eval_video_{timestamp_str}.mp4")
+        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        video_writer = cv2.VideoWriter(
+            output_video_path, fourcc, 20.0,
+            (CONFIG.camera.FRAME_WIDTH, CONFIG.camera.FRAME_HEIGHT)
+        )
+        print(f"[INFO] Video recording armed -> {output_video_path}")
 
     # 2. Start Sensor Background Threads
     print("[2/5] Starting live sensor streams...")
@@ -192,6 +215,7 @@ def run_realtime_evaluation(
 
             loop_ms = (time.time() - loop_start) * 1000.0
             loop_times_ms.append(loop_ms)
+            cur_fps = 1000.0 / max(0.1, loop_ms)
 
             # G. Periodic Console Heartbeat (every 1.0s)
             if now - last_print_time >= 1.0:
@@ -204,23 +228,69 @@ def run_realtime_evaluation(
                 print(f" {elapsed_total:>5.1f}s | {recent_fps:>4.1f} | {recent_infer:>6.1f}ms | {det_summary:>10} | {lidar_str:>9} | {worker_str:>6} | {lvl}")
                 last_print_time = now
 
-            # H. Save snapshot if detections or hazard present
-            if save_snapshots and (now - last_snapshot_time >= 5.0 or lvl in ["HIGH RISK", "CRITICAL"]):
+            # H. Video Annotation (for Display, Recording, and Snapshots)
+            annotated = None
+            if display or record or save_snapshots:
+                annotated = frame.copy()
+                h, w = annotated.shape[:2]
+
+                # 1. Top Hazard Risk Banner
+                banner_colors = {
+                    "SAFE": (34, 197, 94),       # Green
+                    "CAUTION": (234, 179, 8),    # Yellow
+                    "HIGH RISK": (249, 115, 22), # Orange
+                    "CRITICAL": (239, 68, 68)    # Red
+                }
+                b_color = banner_colors.get(lvl, (100, 100, 100))
+                cv2.rectangle(annotated, (0, 0), (w, 34), b_color, -1)
+                cv2.putText(
+                    annotated,
+                    f"RISK: {lvl} | TTC: {assessment.min_ttc_sec:.1f}s | DIST: {assessment.min_distance_m:.1f}m",
+                    (12, 23), cv2.FONT_HERSHEY_SIMPLEX, 0.60, (0, 0, 0) if lvl == "CAUTION" else (255, 255, 255), 2
+                )
+
+                # 2. Draw Object Detections & Tracking Boxes
+                for trk in tracks:
+                    x1, y1, x2, y2 = trk.bbox
+                    is_veh = (trk.class_name == "vehicle")
+                    box_color = (0, 140, 255) if is_veh else (0, 255, 0)
+                    cv2.rectangle(annotated, (x1, y1), (x2, y2), box_color, 2)
+                    
+                    # Tag text
+                    if is_veh:
+                        sub = getattr(trk, "subclass", "car")
+                        tag = f"{sub.upper()} #{trk.track_id} ({int(trk.confidence*100)}%)"
+                    else:
+                        tag = f"WORKER #{trk.track_id} ({int(trk.confidence*100)}%)"
+                        if getattr(trk, "ppe_verified", False):
+                            tag += " [PPE VEST]"
+                    
+                    cv2.rectangle(annotated, (x1, max(0, y1 - 20)), (x1 + len(tag) * 8 + 6, y1), box_color, -1)
+                    cv2.putText(annotated, tag, (x1 + 3, max(14, y1 - 4)), cv2.FONT_HERSHEY_SIMPLEX, 0.42, (0, 0, 0), 1)
+
+                # 3. Bottom HUD Overlay: Hardware Sensors & Performance
+                cv2.rectangle(annotated, (0, h - 28), (w, h), (20, 20, 20), -1)
+                lid_text = f"LiDAR: {lidar_reading.distance_m:.2f}m ({lidar_reading.range_rate_mps:+.1f}m/s)" if lidar_reading and getattr(lidar_reading, "valid", False) else "LiDAR: Waiting UDP"
+                wrk_text = f"Worker: {list(workers.values())[0].motion_state} (SVM: {list(workers.values())[0].svm:.2f}g)" if workers else "Worker: Offline"
+                hud_str = f"{lid_text} | {wrk_text} | FPS: {cur_fps:.1f}"
+                cv2.putText(annotated, hud_str, (10, h - 8), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (220, 220, 220), 1)
+
+            # I. Write frame to Output Video File
+            if video_writer and annotated is not None:
+                video_writer.write(annotated)
+
+            # J. Live Interactive Display Window
+            if display and annotated is not None:
+                cv2.imshow("Safety Pole - Real-Time Model Evaluation", annotated)
+                key = cv2.waitKey(1) & 0xFF
+                if key in (ord('q'), ord('Q'), 27):  # 'q' or ESC
+                    print("\n[INFO] User pressed 'q' in video display window. Exiting...")
+                    break
+
+            # K. Save snapshot periodically if detections or hazard present
+            if save_snapshots and annotated is not None and (now - last_snapshot_time >= 5.0 or lvl in ["HIGH RISK", "CRITICAL"]):
                 if detections or lvl != "SAFE":
                     last_snapshot_time = now
-                    annotated = frame.copy()
-                    for d in detections:
-                        x1, y1, x2, y2 = d.bbox
-                        col = (0, 140, 255) if d.class_name == "vehicle" else (0, 255, 0)
-                        cv2.rectangle(annotated, (x1, y1), (x2, y2), col, 2)
-                        tag = f"{d.subclass.upper()} {int(d.confidence*100)}%"
-                        if d.class_name == "worker" and d.ppe_verified:
-                            tag += " [PPE]"
-                        cv2.putText(annotated, tag, (x1, max(15, y1 - 5)), cv2.FONT_HERSHEY_SIMPLEX, 0.45, col, 1)
-
-                    cv2.putText(annotated, f"RISK: {lvl} | TTC: {assessment.min_ttc_sec:.1f}s", (15, 25), 
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 0, 255) if lvl != "SAFE" else (0, 255, 0), 2)
-                    
                     snap_file = os.path.join(snapshot_dir, f"snap_{saved_snapshot_count:04d}_{lvl}.jpg")
                     cv2.imwrite(snap_file, annotated)
                     saved_snapshot_count += 1
@@ -231,6 +301,13 @@ def run_realtime_evaluation(
     except KeyboardInterrupt:
         print("\n[INFO] Real-time evaluation interrupted by user.")
     finally:
+        # Clean shutdown of display and recording
+        if video_writer:
+            video_writer.release()
+            print(f"[INFO] Output video successfully saved to: {output_video_path}")
+        if display:
+            cv2.destroyAllWindows()
+
         # Clean shutdown of sensors
         camera_mgr.stop()
         worker_rx.stop()
@@ -285,7 +362,6 @@ def run_realtime_evaluation(
     print("=" * 70)
 
     # 6. Save Markdown & JSON Reports
-    timestamp_str = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     report_md_path = os.path.join(save_dir, f"eval_report_{timestamp_str}.md")
     metrics_json_path = os.path.join(save_dir, f"metrics_{timestamp_str}.json")
 
@@ -296,6 +372,7 @@ def run_realtime_evaluation(
         "effective_fps": avg_fps,
         "camera_source": camera_source,
         "model_name": detector.active_model_name,
+        "video_recorded_path": output_video_path,
         "latency_ms": {
             "mean": avg_infer_ms,
             "p95": p95_infer_ms,
@@ -338,7 +415,11 @@ def run_realtime_evaluation(
         mf.write(f"**Date/Time:** {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}  \n")
         mf.write(f"**Camera Source:** `{camera_source}`  \n")
         mf.write(f"**Active Model:** `{detector.active_model_name}`  \n")
-        mf.write(f"**Duration:** {total_duration:.2f} seconds ({frame_count} frames)  \n\n")
+        mf.write(f"**Duration:** {total_duration:.2f} seconds ({frame_count} frames)  \n")
+        if output_video_path:
+            mf.write(f"**Recorded Video:** `{output_video_path}`  \n\n")
+        else:
+            mf.write("\n")
         
         mf.write("## 1. Computer Vision & Inference Latency\n")
         mf.write(f"| Metric | Value |\n|---|---|\n")
@@ -364,26 +445,34 @@ def run_realtime_evaluation(
         mf.write(f"- **Camera-LiDAR Spatial Associations:** `{fused_associations_count}`\n")
         mf.write(f"- **Minimum TTC Recorded:** `{min_ttc_observed:.2f}s`\n")
         mf.write(f"- **Risk Level Distribution:** `{risk_level_durations}`\n")
+        if output_video_path:
+            mf.write(f"- **Full Annotated Evaluation Video:** Saved to `{output_video_path}`\n")
         if save_snapshots:
-            mf.write(f"\n*Saved {saved_snapshot_count} annotated inspection snapshots to `{snapshot_dir}`*\n")
+            mf.write(f"- **Inspection Snapshots:** Saved `{saved_snapshot_count}` images to `{snapshot_dir}`\n")
 
     print(f"\n[DONE] Evaluation Markdown Report: {report_md_path}")
     print(f"[DONE] Raw JSON Metrics:            {metrics_json_path}")
+    if output_video_path:
+        print(f"[DONE] Recorded Output Video:       {output_video_path}")
     if save_snapshots:
         print(f"[DONE] Annotated Snapshots:          {snapshot_dir} ({saved_snapshot_count} images)")
     print("=" * 70)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Evaluate Safety Pole Model on Real-Time Live Data")
+    parser = argparse.ArgumentParser(description="Evaluate Safety Pole Model on Real-Time Live Data with Video Output")
     parser.add_argument("--camera", type=str, default="picam2",
                         help="Camera source: 'picam2' (Pi CSI), '0' (USB Webcam), or video file path")
     parser.add_argument("--model", type=str, default=CONFIG.cv.MODEL_PATH,
                         help="Path or name of YOLO model weights (.pt file)")
     parser.add_argument("--duration", type=float, default=30.0,
                         help="Evaluation duration in seconds (0 for continuous until Ctrl+C)")
+    parser.add_argument("--display", action="store_true",
+                        help="Display real-time interactive video window with bounding boxes & threat banners")
+    parser.add_argument("--record", action="store_true",
+                        help="Record and save annotated evaluation video to an .mp4 file")
     parser.add_argument("--save-dir", type=str, default="eval_results",
-                        help="Directory to save evaluation reports and snapshots")
+                        help="Directory to save evaluation reports, videos, and snapshots")
     parser.add_argument("--no-snapshots", action="store_true",
                         help="Disable saving annotated frame snapshots")
     args = parser.parse_args()
@@ -393,5 +482,7 @@ if __name__ == "__main__":
         model_path=args.model,
         duration_sec=args.duration,
         save_dir=args.save_dir,
-        save_snapshots=not args.no_snapshots
+        save_snapshots=not args.no_snapshots,
+        display=args.display,
+        record=args.record
     )
