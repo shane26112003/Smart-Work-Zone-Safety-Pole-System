@@ -62,20 +62,21 @@ class CVConfig:
     IMAGE_SIZE: int = 640                 # Inference resolution (matching camera width)
 
     # Class-Specific Confidence Thresholds (prevents small object noise from triggering false vehicle detections)
-    WORKER_CONF_THRESHOLD: float = 0.28   # Sensitive threshold for workers (standing, bending, walking)
-    VEHICLE_CONF_THRESHOLD: float = 0.45  # Higher threshold for vehicles to eliminate false detections on small specks
-    BICYCLE_CONF_THRESHOLD: float = 0.50  # Strict threshold if bicycles are present
+    WORKER_CONF_THRESHOLD: float = 0.20   # Highly sensitive threshold so all persons on camera are detected
+    VEHICLE_CONF_THRESHOLD: float = 0.55  # Stricter threshold for vehicles to eliminate false detections on small objects
+    BICYCLE_CONF_THRESHOLD: float = 0.55  # Strict threshold if bicycles are present
 
     # Minimum Geometric Size Filters (prevents small background objects from being classified as vehicles)
-    VEHICLE_MIN_WIDTH_PX: int = 30        # Vehicle must be at least 30 px wide
-    VEHICLE_MIN_HEIGHT_PX: int = 24       # Vehicle must be at least 24 px high
-    VEHICLE_MIN_AREA_PX: int = 750        # Minimum pixel area for a valid vehicle (eliminates small debris/objects)
-    VEHICLE_MIN_ASPECT_RATIO: float = 0.55 # Width / Height (vehicles are horizontal)
-    VEHICLE_MAX_ASPECT_RATIO: float = 4.0  # Width / Height upper bound
+    VEHICLE_MIN_WIDTH_PX: int = 65        # Vehicle must be at least 65 px wide (filters out small objects/clutter)
+    VEHICLE_MIN_HEIGHT_PX: int = 40       # Vehicle must be at least 40 px high
+    VEHICLE_MIN_AREA_PX: int = 2800       # Minimum pixel area for a valid vehicle (eliminates small objects/debris)
+    VEHICLE_MIN_ASPECT_RATIO: float = 0.65 # Width / Height (vehicles are horizontal)
+    VEHICLE_MAX_ASPECT_RATIO: float = 3.5  # Width / Height upper bound
 
     # Worker Geometric Sanity Filters
-    WORKER_MIN_HEIGHT_PX: int = 35        # A person must be at least 35 px tall
-    WORKER_MIN_ASPECT_RATIO: float = 0.70 # Height / Width (people are upright)
+    WORKER_MIN_HEIGHT_PX: int = 20        # A person must be at least 20 px tall (detects distant/seated people)
+    WORKER_MIN_ASPECT_RATIO: float = 0.15 # Relaxed aspect ratio so seated, bending, or cropped persons are detected
+    ASSUME_ALL_PERSONS_ARE_WORKERS: bool = True # For now, detect and display any person on camera as a worker
 
     # Image enhancement (Adaptive CLAHE only for extremely dark or washed-out lighting)
     ENABLE_ENHANCEMENT: bool = False       # Disabled by default to prevent sensor noise amplification
@@ -94,7 +95,7 @@ class CVConfig:
 
     # Tracking parameters
     TRACK_MAX_AGE_FRAMES: int = 30
-    TRACK_MIN_HITS: int = 2               # 2 hits for fast track initiation without lag
+    TRACK_MIN_HITS: int = 1               # 1 hit for immediate track initiation without delay
 
 
 @dataclass

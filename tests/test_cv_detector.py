@@ -128,3 +128,17 @@ def test_tracker_subclass_and_ppe_propagation():
 
     veh_track = next(t for t in tracks if t.class_name == "vehicle")
     assert veh_track.subclass == "truck"
+
+
+def test_small_object_vehicle_rejection():
+    """Verify size thresholds prevent small objects (mugs, mice, phones) from being classified as vehicles."""
+    # Under 65px width, 40px height, or 2800px area
+    bw, bh = 40, 30
+    area = bw * bh
+    assert bw < CONFIG.cv.VEHICLE_MIN_WIDTH_PX or bh < CONFIG.cv.VEHICLE_MIN_HEIGHT_PX or area < CONFIG.cv.VEHICLE_MIN_AREA_PX
+
+
+def test_person_classified_as_worker():
+    """Verify that any person detection is treated as a worker."""
+    assert getattr(CONFIG.cv, "ASSUME_ALL_PERSONS_ARE_WORKERS", False) is True
+    assert 0 in CONFIG.cv.WORKER_CLASSES

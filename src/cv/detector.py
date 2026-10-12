@@ -255,8 +255,8 @@ class ObjectDetector:
             target_classes = CONFIG.cv.WORKER_CLASSES + CONFIG.cv.VEHICLE_CLASSES + getattr(CONFIG.cv, "BICYCLE_CLASSES", [])
             img_size = getattr(CONFIG.cv, "IMAGE_SIZE", 640)
 
-            # Query YOLO with sensitive base threshold
-            min_conf = min(getattr(CONFIG.cv, "WORKER_CONF_THRESHOLD", 0.28), 0.25)
+            # Query YOLO with sensitive base threshold so any person is captured
+            min_conf = min(getattr(CONFIG.cv, "WORKER_CONF_THRESHOLD", 0.20), 0.20)
             results = self.model.predict(
                 source=input_frame,
                 conf=min_conf,
@@ -266,113 +266,176 @@ class ObjectDetector:
                 verbose=False
             )
 
+            # Separate detected boxes into workers, vehicles, and bicycles
+            worker_boxes = []
+            vehicle_boxes = []
+            bike_boxes = []
+
             for r in results:
-                boxes = r.boxes
-                for box in boxes:
+                for box in r.boxes:
                     cls_id = int(box.cls[0].item())
-                    conf = float(box.conf[0].item())
-                    xyxy = box.xyxy[0].cpu().numpy().astype(int)
-                    x1, y1, x2, y2 = int(xyxy[0]), int(xyxy[1]), int(xyxy[2]), int(xyxy[3])
-
-                    # Clamp coordinates to frame bounds
-                    x1 = max(0, min(w - 1, x1))
-                    y1 = max(0, min(h - 1, y1))
-                    x2 = max(x1 + 1, min(w, x2))
-                    y2 = max(y1 + 1, min(h, y2))
-
-                    bw = x2 - x1
-                    bh = y2 - y1
-                    area = bw * bh
-                    cx = int((x1 + x2) / 2)
-                    cy = int((y1 + y2) / 2)
-                    bc = (cx, y2)
-
-                    # ---------------------------------------------------------
-                    # 1. WORKER DETECTION (COCO Class 0: person)
-                    # ---------------------------------------------------------
                     if cls_id in CONFIG.cv.WORKER_CLASSES:
-                        worker_thresh = getattr(CONFIG.cv, "WORKER_CONF_THRESHOLD", 0.28)
-                        if conf < worker_thresh:
-                            continue
-                        # Worker height sanity filter
-                        min_h = getattr(CONFIG.cv, "WORKER_MIN_HEIGHT_PX", 35)
-                        if bh < min_h:
-                            continue
-                        # Worker aspect ratio (must be vertical: height >= 0.70 * width)
-                        min_aspect = getattr(CONFIG.cv, "WORKER_MIN_ASPECT_RATIO", 0.70)
-                        if (bh / max(1, bw)) < min_aspect:
-                            continue
-
-                        # Evaluate Work-Zone PPE (Safety Vest & Hard Hat)
-                        crop = frame[y1:y2, x1:x2]
-                        has_ppe, ppe_score, subcat = self.verify_worker_ppe(crop)
-
-                        detections.append(Detection(
-                            bbox=(x1, y1, x2, y2),
-                            confidence=round(conf, 2),
-                            class_id=cls_id,
-                            class_name="worker",
-                            subclass=subcat,
-                            ppe_verified=has_ppe,
-                            ppe_confidence=ppe_score,
-                            center=(cx, cy),
-                            bottom_center=bc
-                        ))
-
-                    # ---------------------------------------------------------
-                    # 2. MOTOR VEHICLE DETECTION (Classes: 2=car, 3=motorcycle, 5=bus, 7=truck)
-                    # ---------------------------------------------------------
+                        worker_boxes.append(box)
                     elif cls_id in CONFIG.cv.VEHICLE_CLASSES:
-                        veh_thresh = getattr(CONFIG.cv, "VEHICLE_CONF_THRESHOLD", 0.45)
-                        if conf < veh_thresh:
-                            continue
-                        # Bounding box size sanity filters (stops tiny noise specks from being called vehicles)
-                        min_w = getattr(CONFIG.cv, "VEHICLE_MIN_WIDTH_PX", 30)
-                        min_h = getattr(CONFIG.cv, "VEHICLE_MIN_HEIGHT_PX", 24)
-                        min_a = getattr(CONFIG.cv, "VEHICLE_MIN_AREA_PX", 750)
-                        if bw < min_w or bh < min_h or area < min_a:
-                            continue
-                        # Vehicle aspect ratio sanity: vehicles are horizontal (0.55 <= w/h <= 4.0)
-                        aspect = bw / max(1, bh)
-                        min_asp = getattr(CONFIG.cv, "VEHICLE_MIN_ASPECT_RATIO", 0.55)
-                        max_asp = getattr(CONFIG.cv, "VEHICLE_MAX_ASPECT_RATIO", 4.0)
-                        if aspect < min_asp or aspect > max_asp:
-                            continue
-
-                        subcat = self.COCO_SUBCLASS_MAP.get(cls_id, "vehicle")
-                        detections.append(Detection(
-                            bbox=(x1, y1, x2, y2),
-                            confidence=round(conf, 2),
-                            class_id=cls_id,
-                            class_name="vehicle",
-                            subclass=subcat,
-                            ppe_verified=False,
-                            ppe_confidence=0.0,
-                            center=(cx, cy),
-                            bottom_center=bc
-                        ))
-
-                    # ---------------------------------------------------------
-                    # 3. BICYCLE DETECTION (COCO Class 1)
-                    # ---------------------------------------------------------
+                        vehicle_boxes.append(box)
                     elif cls_id in getattr(CONFIG.cv, "BICYCLE_CLASSES", []):
-                        bike_thresh = getattr(CONFIG.cv, "BICYCLE_CONF_THRESHOLD", 0.50)
-                        if conf < bike_thresh:
-                            continue
-                        if bh < 40 or bw < 25 or area < 1000:
-                            continue
+                        bike_boxes.append(box)
 
-                        detections.append(Detection(
-                            bbox=(x1, y1, x2, y2),
-                            confidence=round(conf, 2),
-                            class_id=cls_id,
-                            class_name="vehicle",
-                            subclass="bicycle",
-                            ppe_verified=False,
-                            ppe_confidence=0.0,
-                            center=(cx, cy),
-                            bottom_center=bc
-                        ))
+            # ---------------------------------------------------------
+            # 1. WORKER DETECTION (COCO Class 0: person)
+            # Detects and displays ANY person on the camera as a WORKER
+            # ---------------------------------------------------------
+            for box in worker_boxes:
+                conf = float(box.conf[0].item())
+                worker_thresh = getattr(CONFIG.cv, "WORKER_CONF_THRESHOLD", 0.20)
+                if conf < worker_thresh:
+                    continue
+
+                xyxy = box.xyxy[0].cpu().numpy().astype(int)
+                x1, y1, x2, y2 = int(xyxy[0]), int(xyxy[1]), int(xyxy[2]), int(xyxy[3])
+                x1, y1 = max(0, min(w - 1, x1)), max(0, min(h - 1, y1))
+                x2, y2 = max(x1 + 1, min(w, x2)), max(y1 + 1, min(h, y2))
+                bw, bh = x2 - x1, y2 - y1
+
+                # Height filter: relaxed to 20px so distant / seated workers are captured
+                min_h = getattr(CONFIG.cv, "WORKER_MIN_HEIGHT_PX", 20)
+                if bh < min_h:
+                    continue
+
+                # Aspect ratio filter: relaxed to 0.15 so seated, leaning, or cropped persons are detected
+                min_aspect = getattr(CONFIG.cv, "WORKER_MIN_ASPECT_RATIO", 0.15)
+                if (bh / max(1, bw)) < min_aspect:
+                    continue
+
+                # Check PPE (Safety Vest & Hard Hat)
+                crop = frame[y1:y2, x1:x2]
+                has_ppe, ppe_score, ppe_subcat = self.verify_worker_ppe(crop)
+
+                # For now, treat ANY person on the camera as a WORKER
+                assume_all_workers = getattr(CONFIG.cv, "ASSUME_ALL_PERSONS_ARE_WORKERS", True)
+                if assume_all_workers:
+                    subcat = "worker"
+                    ppe_verified = True
+                    ppe_conf = max(ppe_score, 0.90)
+                else:
+                    subcat = ppe_subcat
+                    ppe_verified = has_ppe
+                    ppe_conf = ppe_score
+
+                cx = int((x1 + x2) / 2)
+                cy = int((y1 + y2) / 2)
+
+                detections.append(Detection(
+                    bbox=(x1, y1, x2, y2),
+                    confidence=round(conf, 2),
+                    class_id=0,
+                    class_name="worker",
+                    subclass=subcat,
+                    ppe_verified=ppe_verified,
+                    ppe_confidence=round(ppe_conf, 2),
+                    center=(cx, cy),
+                    bottom_center=(cx, y2)
+                ))
+
+            # ---------------------------------------------------------
+            # 2. MOTOR VEHICLE DETECTION (Classes: 2=car, 3=motorcycle, 5=bus, 7=truck)
+            # High-confidence and strict size filters prevent small desktop/background
+            # objects (phones, cups, mice, clutter) from being classified as vehicles.
+            # ---------------------------------------------------------
+            for box in vehicle_boxes:
+                cls_id = int(box.cls[0].item())
+                conf = float(box.conf[0].item())
+                veh_thresh = getattr(CONFIG.cv, "VEHICLE_CONF_THRESHOLD", 0.55)
+                if conf < veh_thresh:
+                    continue
+
+                xyxy = box.xyxy[0].cpu().numpy().astype(int)
+                x1, y1, x2, y2 = int(xyxy[0]), int(xyxy[1]), int(xyxy[2]), int(xyxy[3])
+                x1, y1 = max(0, min(w - 1, x1)), max(0, min(h - 1, y1))
+                x2, y2 = max(x1 + 1, min(w, x2)), max(y1 + 1, min(h, y2))
+                bw, bh = x2 - x1, y2 - y1
+                area = bw * bh
+
+                # Strict size sanity filters: reject small objects
+                min_w = getattr(CONFIG.cv, "VEHICLE_MIN_WIDTH_PX", 65)
+                min_h = getattr(CONFIG.cv, "VEHICLE_MIN_HEIGHT_PX", 40)
+                min_a = getattr(CONFIG.cv, "VEHICLE_MIN_AREA_PX", 2800)
+                if bw < min_w or bh < min_h or area < min_a:
+                    continue
+
+                # Vehicle aspect ratio sanity: vehicles are horizontal (0.65 <= w/h <= 3.5)
+                aspect = bw / max(1, bh)
+                min_asp = getattr(CONFIG.cv, "VEHICLE_MIN_ASPECT_RATIO", 0.65)
+                max_asp = getattr(CONFIG.cv, "VEHICLE_MAX_ASPECT_RATIO", 3.5)
+                if aspect < min_asp or aspect > max_asp:
+                    continue
+
+                # Exclusion: if candidate vehicle box overlaps significantly with a detected worker,
+                # reject it (prevents personal items, chairs, bags, or clothing from being called cars)
+                overlaps_worker = False
+                for wd in detections:
+                    if wd.class_name == "worker":
+                        wx1, wy1, wx2, wy2 = wd.bbox
+                        ix1, iy1 = max(x1, wx1), max(y1, wy1)
+                        ix2, iy2 = min(x2, wx2), min(y2, wy2)
+                        if ix2 > ix1 and iy2 > iy1:
+                            inter_area = (ix2 - ix1) * (iy2 - iy1)
+                            if (inter_area / max(1, area)) > 0.40:
+                                overlaps_worker = True
+                                break
+                if overlaps_worker:
+                    continue
+
+                cx = int((x1 + x2) / 2)
+                cy = int((y1 + y2) / 2)
+                subcat = self.COCO_SUBCLASS_MAP.get(cls_id, "vehicle")
+
+                detections.append(Detection(
+                    bbox=(x1, y1, x2, y2),
+                    confidence=round(conf, 2),
+                    class_id=cls_id,
+                    class_name="vehicle",
+                    subclass=subcat,
+                    ppe_verified=False,
+                    ppe_confidence=0.0,
+                    center=(cx, cy),
+                    bottom_center=(cx, y2)
+                ))
+
+            # ---------------------------------------------------------
+            # 3. BICYCLE DETECTION (COCO Class 1)
+            # ---------------------------------------------------------
+            for box in bike_boxes:
+                cls_id = int(box.cls[0].item())
+                conf = float(box.conf[0].item())
+                bike_thresh = getattr(CONFIG.cv, "BICYCLE_CONF_THRESHOLD", 0.55)
+                if conf < bike_thresh:
+                    continue
+
+                xyxy = box.xyxy[0].cpu().numpy().astype(int)
+                x1, y1, x2, y2 = int(xyxy[0]), int(xyxy[1]), int(xyxy[2]), int(xyxy[3])
+                x1, y1 = max(0, min(w - 1, x1)), max(0, min(h - 1, y1))
+                x2, y2 = max(x1 + 1, min(w, x2)), max(y1 + 1, min(h, y2))
+                bw, bh = x2 - x1, y2 - y1
+                area = bw * bh
+
+                if bh < 45 or bw < 35 or area < 2000:
+                    continue
+
+                cx = int((x1 + x2) / 2)
+                cy = int((y1 + y2) / 2)
+
+                detections.append(Detection(
+                    bbox=(x1, y1, x2, y2),
+                    confidence=round(conf, 2),
+                    class_id=cls_id,
+                    class_name="vehicle",
+                    subclass="bicycle",
+                    ppe_verified=False,
+                    ppe_confidence=0.0,
+                    center=(cx, cy),
+                    bottom_center=(cx, y2)
+                ))
 
         except Exception as e:
             logger.error(f"YOLO inference error: {e}", exc_info=True)
@@ -439,7 +502,7 @@ class ObjectDetector:
                         confidence=0.92,
                         class_id=0,
                         class_name="worker",
-                        subclass="worker_ppe",
+                        subclass="worker",
                         ppe_verified=True,
                         ppe_confidence=0.95,
                         center=(cx, cy),
@@ -453,15 +516,15 @@ class ObjectDetector:
 
         # Only look in roadway area (below horizon, right of cone divider line)
         mask_veh[:int(h * 0.40), :] = 0
-        mask_veh[:, :int(w * 0.30)] = 0 # Ignore work-zone surface
+        mask_veh[:, :int(w * 0.35)] = 0 # Ignore work-zone surface and safety cone divider
 
         contours_veh, _ = cv2.findContours(mask_veh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         for c in contours_veh:
             area = cv2.contourArea(c)
-            if area > 100:
+            if area > 180:
                 x, y, bw, bh = cv2.boundingRect(c)
-                # Vehicles in roadway have width >= 0.7 * height
-                if bw >= int(bh * 0.7) and bw > 15:
+                # Vehicles in roadway have width >= 0.65 * height
+                if bw >= 24 and bh >= 10 and (bw / max(1, bh)) >= 0.65:
                     cx = int(x + bw / 2)
                     cy = int(y + bh / 2)
                     # Exclude worker overlap

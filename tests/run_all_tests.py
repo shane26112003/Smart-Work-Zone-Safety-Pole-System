@@ -42,7 +42,9 @@ def run_suite():
             "test_clahe_contrast_enhancement",
             "test_worker_ppe_verification",
             "test_synthetic_scene_worker_vehicle_separation",
-            "test_tracker_subclass_and_ppe_propagation"
+            "test_tracker_subclass_and_ppe_propagation",
+            "test_small_object_vehicle_rejection",
+            "test_person_classified_as_worker"
         ]),
         ("test_system_pipeline", [
             "test_full_pipeline_step"

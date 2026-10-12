@@ -70,7 +70,10 @@ class SafetyPoleSystem:
 
         # 2. Perception & AI Vision Layer
         self.detector = ObjectDetector(model_path=CONFIG.cv.MODEL_PATH)
-        self.tracker = MultiObjectTracker(max_age=CONFIG.cv.TRACK_MAX_AGE_FRAMES)
+        self.tracker = MultiObjectTracker(
+            max_age=CONFIG.cv.TRACK_MAX_AGE_FRAMES,
+            min_hits=getattr(CONFIG.cv, "TRACK_MIN_HITS", 1)
+        )
 
         # 3. Fusion & Calibration Layer
         self.bev = BEVTransform(CONFIG.camera.FRAME_WIDTH, CONFIG.camera.FRAME_HEIGHT)

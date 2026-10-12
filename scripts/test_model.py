@@ -32,7 +32,7 @@ def test_model(source: str, model_path: str, save_output: bool = True, iteration
     print(f"[1/4] Initializing Detector with model: {model_path}...")
     detector = ObjectDetector(model_path=model_path)
     print(f"      Active Model: {detector.active_model_name}")
-    print(f"      Confidence Thresholds: Worker={getattr(CONFIG.cv, 'WORKER_CONF_THRESHOLD', 0.28)}, Vehicle={getattr(CONFIG.cv, 'VEHICLE_CONF_THRESHOLD', 0.45)}")
+    print(f"      Confidence Thresholds: Worker={getattr(CONFIG.cv, 'WORKER_CONF_THRESHOLD', 0.20)}, Vehicle={getattr(CONFIG.cv, 'VEHICLE_CONF_THRESHOLD', 0.55)}")
     print(f"      Target Classes: Workers={CONFIG.cv.WORKER_CLASSES}, Vehicles={CONFIG.cv.VEHICLE_CLASSES}")
 
     print(f"\n[2/4] Ingesting test frame from source: '{source}'...")
@@ -117,9 +117,12 @@ def test_model(source: str, model_path: str, save_output: bool = True, iteration
             x1, y1, x2, y2 = d.bbox
             color = (0, 140, 255) if d.class_name == "vehicle" else (0, 255, 0)
             cv2.rectangle(annotated, (x1, y1), (x2, y2), color, 2)
-            lbl = f"{d.subclass.upper()} ({int(d.confidence*100)}%)"
-            if d.class_name == "worker" and d.ppe_verified:
-                lbl += " [PPE]"
+            if d.class_name == "worker":
+                lbl = f"WORKER ({int(d.confidence*100)}%)"
+                if d.ppe_verified:
+                    lbl += " [PPE]"
+            else:
+                lbl = f"{d.subclass.upper()} ({int(d.confidence*100)}%)"
             cv2.rectangle(annotated, (x1, max(0, y1 - 20)), (x1 + len(lbl)*9, y1), color, -1)
             cv2.putText(annotated, lbl, (x1 + 3, max(12, y1 - 5)), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 0), 1)
 
