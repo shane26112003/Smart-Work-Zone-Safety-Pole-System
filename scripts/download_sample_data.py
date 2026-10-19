@@ -43,10 +43,19 @@ def download_samples():
         except Exception as e:
             print(f"[ERROR] Failed to download {item['filename']}: {e}")
 
+    # Also generate the ultra-lightweight trajectory benchmark dataset
+    try:
+        from generate_sample_trajectories import generate_benchmark_csv
+        generate_benchmark_csv()
+    except Exception:
+        pass
+
     print("\n" + "=" * 65)
     print(" READY FOR EVALUATION!")
-    print(" Run evaluation on sample video with:")
-    print(f"   python scripts/evaluate_realtime.py --camera sample_data/highway_traffic_sample.mp4 --record --display")
+    print(" 1. Run video evaluation:")
+    print("    python scripts/evaluate_realtime.py --camera sample_data/highway_traffic_sample.mp4 --record --display")
+    print(" 2. Run vehicle trajectory prediction evaluation:")
+    print("    python scripts/evaluate_trajectory.py --dataset custom --file sample_data/vehicle_trajectories_benchmark.csv")
     print("=" * 65)
 
 if __name__ == "__main__":

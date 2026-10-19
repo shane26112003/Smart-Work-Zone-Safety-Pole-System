@@ -1,0 +1,1001 @@
+track_id,timestamp,x,y,speed_kmh,scenario
+VEH_01,0.00,3.500,88.333,60.0,Highway Cruise (60 km/h)
+VEH_01,0.10,3.500,86.666,60.0,Highway Cruise (60 km/h)
+VEH_01,0.20,3.500,84.999,60.0,Highway Cruise (60 km/h)
+VEH_01,0.30,3.500,83.332,60.0,Highway Cruise (60 km/h)
+VEH_01,0.40,3.500,81.665,60.0,Highway Cruise (60 km/h)
+VEH_01,0.50,3.500,79.998,60.0,Highway Cruise (60 km/h)
+VEH_01,0.60,3.500,78.331,60.0,Highway Cruise (60 km/h)
+VEH_01,0.70,3.500,76.664,60.0,Highway Cruise (60 km/h)
+VEH_01,0.80,3.500,74.997,60.0,Highway Cruise (60 km/h)
+VEH_01,0.90,3.500,73.330,60.0,Highway Cruise (60 km/h)
+VEH_01,1.00,3.500,71.663,60.0,Highway Cruise (60 km/h)
+VEH_01,1.10,3.500,69.996,60.0,Highway Cruise (60 km/h)
+VEH_01,1.20,3.500,68.329,60.0,Highway Cruise (60 km/h)
+VEH_01,1.30,3.500,66.662,60.0,Highway Cruise (60 km/h)
+VEH_01,1.40,3.500,64.995,60.0,Highway Cruise (60 km/h)
+VEH_01,1.50,3.500,63.328,60.0,Highway Cruise (60 km/h)
+VEH_01,1.60,3.500,61.661,60.0,Highway Cruise (60 km/h)
+VEH_01,1.70,3.500,59.994,60.0,Highway Cruise (60 km/h)
+VEH_01,1.80,3.500,58.327,60.0,Highway Cruise (60 km/h)
+VEH_01,1.90,3.500,56.660,60.0,Highway Cruise (60 km/h)
+VEH_01,2.00,3.500,54.993,60.0,Highway Cruise (60 km/h)
+VEH_01,2.10,3.500,53.326,60.0,Highway Cruise (60 km/h)
+VEH_01,2.20,3.500,51.659,60.0,Highway Cruise (60 km/h)
+VEH_01,2.30,3.500,49.992,60.0,Highway Cruise (60 km/h)
+VEH_01,2.40,3.500,48.325,60.0,Highway Cruise (60 km/h)
+VEH_01,2.50,3.500,46.658,60.0,Highway Cruise (60 km/h)
+VEH_01,2.60,3.500,44.991,60.0,Highway Cruise (60 km/h)
+VEH_01,2.70,3.500,43.324,60.0,Highway Cruise (60 km/h)
+VEH_01,2.80,3.500,41.657,60.0,Highway Cruise (60 km/h)
+VEH_01,2.90,3.500,39.990,60.0,Highway Cruise (60 km/h)
+VEH_01,3.00,3.500,38.323,60.0,Highway Cruise (60 km/h)
+VEH_01,3.10,3.500,36.656,60.0,Highway Cruise (60 km/h)
+VEH_01,3.20,3.500,34.989,60.0,Highway Cruise (60 km/h)
+VEH_01,3.30,3.500,33.322,60.0,Highway Cruise (60 km/h)
+VEH_01,3.40,3.500,31.655,60.0,Highway Cruise (60 km/h)
+VEH_01,3.50,3.500,29.988,60.0,Highway Cruise (60 km/h)
+VEH_01,3.60,3.500,28.321,60.0,Highway Cruise (60 km/h)
+VEH_01,3.70,3.500,26.654,60.0,Highway Cruise (60 km/h)
+VEH_01,3.80,3.500,24.987,60.0,Highway Cruise (60 km/h)
+VEH_01,3.90,3.500,23.320,60.0,Highway Cruise (60 km/h)
+VEH_01,4.00,3.500,21.653,60.0,Highway Cruise (60 km/h)
+VEH_01,4.10,3.500,19.986,60.0,Highway Cruise (60 km/h)
+VEH_01,4.20,3.500,18.319,60.0,Highway Cruise (60 km/h)
+VEH_01,4.30,3.500,16.652,60.0,Highway Cruise (60 km/h)
+VEH_01,4.40,3.500,14.985,60.0,Highway Cruise (60 km/h)
+VEH_01,4.50,3.500,13.318,60.0,Highway Cruise (60 km/h)
+VEH_01,4.60,3.500,11.651,60.0,Highway Cruise (60 km/h)
+VEH_01,4.70,3.500,9.984,60.0,Highway Cruise (60 km/h)
+VEH_01,4.80,3.500,8.317,60.0,Highway Cruise (60 km/h)
+VEH_01,4.90,3.500,6.650,60.0,Highway Cruise (60 km/h)
+VEH_02,0.00,3.500,117.778,80.0,Highway Cruise (80 km/h)
+VEH_02,0.10,3.500,115.556,80.0,Highway Cruise (80 km/h)
+VEH_02,0.20,3.500,113.334,80.0,Highway Cruise (80 km/h)
+VEH_02,0.30,3.500,111.112,80.0,Highway Cruise (80 km/h)
+VEH_02,0.40,3.500,108.890,80.0,Highway Cruise (80 km/h)
+VEH_02,0.50,3.500,106.668,80.0,Highway Cruise (80 km/h)
+VEH_02,0.60,3.500,104.446,80.0,Highway Cruise (80 km/h)
+VEH_02,0.70,3.500,102.224,80.0,Highway Cruise (80 km/h)
+VEH_02,0.80,3.500,100.002,80.0,Highway Cruise (80 km/h)
+VEH_02,0.90,3.500,97.780,80.0,Highway Cruise (80 km/h)
+VEH_02,1.00,3.500,95.558,80.0,Highway Cruise (80 km/h)
+VEH_02,1.10,3.500,93.336,80.0,Highway Cruise (80 km/h)
+VEH_02,1.20,3.500,91.114,80.0,Highway Cruise (80 km/h)
+VEH_02,1.30,3.500,88.892,80.0,Highway Cruise (80 km/h)
+VEH_02,1.40,3.500,86.670,80.0,Highway Cruise (80 km/h)
+VEH_02,1.50,3.500,84.448,80.0,Highway Cruise (80 km/h)
+VEH_02,1.60,3.500,82.226,80.0,Highway Cruise (80 km/h)
+VEH_02,1.70,3.500,80.004,80.0,Highway Cruise (80 km/h)
+VEH_02,1.80,3.500,77.782,80.0,Highway Cruise (80 km/h)
+VEH_02,1.90,3.500,75.560,80.0,Highway Cruise (80 km/h)
+VEH_02,2.00,3.500,73.338,80.0,Highway Cruise (80 km/h)
+VEH_02,2.10,3.500,71.116,80.0,Highway Cruise (80 km/h)
+VEH_02,2.20,3.500,68.894,80.0,Highway Cruise (80 km/h)
+VEH_02,2.30,3.500,66.672,80.0,Highway Cruise (80 km/h)
+VEH_02,2.40,3.500,64.450,80.0,Highway Cruise (80 km/h)
+VEH_02,2.50,3.500,62.228,80.0,Highway Cruise (80 km/h)
+VEH_02,2.60,3.500,60.006,80.0,Highway Cruise (80 km/h)
+VEH_02,2.70,3.500,57.784,80.0,Highway Cruise (80 km/h)
+VEH_02,2.80,3.500,55.562,80.0,Highway Cruise (80 km/h)
+VEH_02,2.90,3.500,53.340,80.0,Highway Cruise (80 km/h)
+VEH_02,3.00,3.500,51.118,80.0,Highway Cruise (80 km/h)
+VEH_02,3.10,3.500,48.896,80.0,Highway Cruise (80 km/h)
+VEH_02,3.20,3.500,46.674,80.0,Highway Cruise (80 km/h)
+VEH_02,3.30,3.500,44.452,80.0,Highway Cruise (80 km/h)
+VEH_02,3.40,3.500,42.230,80.0,Highway Cruise (80 km/h)
+VEH_02,3.50,3.500,40.008,80.0,Highway Cruise (80 km/h)
+VEH_02,3.60,3.500,37.786,80.0,Highway Cruise (80 km/h)
+VEH_02,3.70,3.500,35.564,80.0,Highway Cruise (80 km/h)
+VEH_02,3.80,3.500,33.342,80.0,Highway Cruise (80 km/h)
+VEH_02,3.90,3.500,31.120,80.0,Highway Cruise (80 km/h)
+VEH_02,4.00,3.500,28.898,80.0,Highway Cruise (80 km/h)
+VEH_02,4.10,3.500,26.676,80.0,Highway Cruise (80 km/h)
+VEH_02,4.20,3.500,24.454,80.0,Highway Cruise (80 km/h)
+VEH_02,4.30,3.500,22.232,80.0,Highway Cruise (80 km/h)
+VEH_02,4.40,3.500,20.010,80.0,Highway Cruise (80 km/h)
+VEH_02,4.50,3.500,17.788,80.0,Highway Cruise (80 km/h)
+VEH_02,4.60,3.500,15.566,80.0,Highway Cruise (80 km/h)
+VEH_02,4.70,3.500,13.344,80.0,Highway Cruise (80 km/h)
+VEH_02,4.80,3.500,11.122,80.0,Highway Cruise (80 km/h)
+VEH_02,4.90,3.500,8.900,80.0,Highway Cruise (80 km/h)
+VEH_03,0.00,3.500,127.500,90.0,Highway Cruise (90 km/h)
+VEH_03,0.10,3.500,125.000,90.0,Highway Cruise (90 km/h)
+VEH_03,0.20,3.500,122.500,90.0,Highway Cruise (90 km/h)
+VEH_03,0.30,3.500,120.000,90.0,Highway Cruise (90 km/h)
+VEH_03,0.40,3.500,117.500,90.0,Highway Cruise (90 km/h)
+VEH_03,0.50,3.500,115.000,90.0,Highway Cruise (90 km/h)
+VEH_03,0.60,3.500,112.500,90.0,Highway Cruise (90 km/h)
+VEH_03,0.70,3.500,110.000,90.0,Highway Cruise (90 km/h)
+VEH_03,0.80,3.500,107.500,90.0,Highway Cruise (90 km/h)
+VEH_03,0.90,3.500,105.000,90.0,Highway Cruise (90 km/h)
+VEH_03,1.00,3.500,102.500,90.0,Highway Cruise (90 km/h)
+VEH_03,1.10,3.500,100.000,90.0,Highway Cruise (90 km/h)
+VEH_03,1.20,3.500,97.500,90.0,Highway Cruise (90 km/h)
+VEH_03,1.30,3.500,95.000,90.0,Highway Cruise (90 km/h)
+VEH_03,1.40,3.500,92.500,90.0,Highway Cruise (90 km/h)
+VEH_03,1.50,3.500,90.000,90.0,Highway Cruise (90 km/h)
+VEH_03,1.60,3.500,87.500,90.0,Highway Cruise (90 km/h)
+VEH_03,1.70,3.500,85.000,90.0,Highway Cruise (90 km/h)
+VEH_03,1.80,3.500,82.500,90.0,Highway Cruise (90 km/h)
+VEH_03,1.90,3.500,80.000,90.0,Highway Cruise (90 km/h)
+VEH_03,2.00,3.500,77.500,90.0,Highway Cruise (90 km/h)
+VEH_03,2.10,3.500,75.000,90.0,Highway Cruise (90 km/h)
+VEH_03,2.20,3.500,72.500,90.0,Highway Cruise (90 km/h)
+VEH_03,2.30,3.500,70.000,90.0,Highway Cruise (90 km/h)
+VEH_03,2.40,3.500,67.500,90.0,Highway Cruise (90 km/h)
+VEH_03,2.50,3.500,65.000,90.0,Highway Cruise (90 km/h)
+VEH_03,2.60,3.500,62.500,90.0,Highway Cruise (90 km/h)
+VEH_03,2.70,3.500,60.000,90.0,Highway Cruise (90 km/h)
+VEH_03,2.80,3.500,57.500,90.0,Highway Cruise (90 km/h)
+VEH_03,2.90,3.500,55.000,90.0,Highway Cruise (90 km/h)
+VEH_03,3.00,3.500,52.500,90.0,Highway Cruise (90 km/h)
+VEH_03,3.10,3.500,50.000,90.0,Highway Cruise (90 km/h)
+VEH_03,3.20,3.500,47.500,90.0,Highway Cruise (90 km/h)
+VEH_03,3.30,3.500,45.000,90.0,Highway Cruise (90 km/h)
+VEH_03,3.40,3.500,42.500,90.0,Highway Cruise (90 km/h)
+VEH_03,3.50,3.500,40.000,90.0,Highway Cruise (90 km/h)
+VEH_03,3.60,3.500,37.500,90.0,Highway Cruise (90 km/h)
+VEH_03,3.70,3.500,35.000,90.0,Highway Cruise (90 km/h)
+VEH_03,3.80,3.500,32.500,90.0,Highway Cruise (90 km/h)
+VEH_03,3.90,3.500,30.000,90.0,Highway Cruise (90 km/h)
+VEH_03,4.00,3.500,27.500,90.0,Highway Cruise (90 km/h)
+VEH_03,4.10,3.500,25.000,90.0,Highway Cruise (90 km/h)
+VEH_03,4.20,3.500,22.500,90.0,Highway Cruise (90 km/h)
+VEH_03,4.30,3.500,20.000,90.0,Highway Cruise (90 km/h)
+VEH_03,4.40,3.500,17.500,90.0,Highway Cruise (90 km/h)
+VEH_03,4.50,3.500,15.000,90.0,Highway Cruise (90 km/h)
+VEH_03,4.60,3.500,12.500,90.0,Highway Cruise (90 km/h)
+VEH_03,4.70,3.500,10.000,90.0,Highway Cruise (90 km/h)
+VEH_03,4.80,3.500,7.500,90.0,Highway Cruise (90 km/h)
+VEH_03,4.90,3.500,5.000,90.0,Highway Cruise (90 km/h)
+VEH_04,0.00,7.000,156.945,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,0.10,7.000,153.890,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,0.20,7.000,150.835,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,0.30,7.000,147.780,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,0.40,7.000,144.725,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,0.50,7.000,141.670,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,0.60,7.000,138.615,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,0.70,7.000,135.560,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,0.80,7.000,132.505,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,0.90,7.000,129.450,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,1.00,7.000,126.395,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,1.10,7.000,123.340,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,1.20,7.000,120.285,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,1.30,7.000,117.230,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,1.40,7.000,114.175,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,1.50,7.000,111.120,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,1.60,7.000,108.065,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,1.70,7.000,105.010,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,1.80,7.000,101.955,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,1.90,7.000,98.900,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,2.00,7.000,95.845,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,2.10,7.000,92.790,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,2.20,7.000,89.735,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,2.30,7.000,86.680,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,2.40,7.000,83.625,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,2.50,7.000,80.570,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,2.60,7.000,77.515,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,2.70,7.000,74.460,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,2.80,7.000,71.405,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,2.90,7.000,68.350,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,3.00,7.000,65.295,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,3.10,7.000,62.240,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,3.20,7.000,59.185,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,3.30,7.000,56.130,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,3.40,7.000,53.075,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,3.50,7.000,50.020,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,3.60,7.000,46.965,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,3.70,7.000,43.910,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,3.80,7.000,40.855,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,3.90,7.000,37.800,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,4.00,7.000,34.745,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,4.10,7.000,31.690,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,4.20,7.000,28.635,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,4.30,7.000,25.580,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,4.40,7.000,22.525,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,4.50,7.000,19.470,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,4.60,7.000,16.415,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,4.70,7.000,13.360,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,4.80,7.000,10.305,110.0,Fast Lane Cruise (110 km/h)
+VEH_04,4.90,7.000,7.250,110.0,Fast Lane Cruise (110 km/h)
+VEH_05,0.00,3.500,107.778,80.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,0.10,3.500,105.556,80.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,0.20,3.500,103.334,80.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,0.30,3.500,101.112,80.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,0.40,3.500,98.890,80.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,0.50,3.500,96.668,80.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,0.60,3.500,94.446,80.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,0.70,3.500,92.224,80.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,0.80,3.500,90.002,80.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,0.90,3.500,87.780,80.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,1.00,3.500,85.558,80.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,1.10,3.500,83.336,80.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,1.20,3.500,81.114,80.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,1.30,3.500,78.892,80.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,1.40,3.500,76.670,80.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,1.50,3.500,74.448,80.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,1.60,3.500,72.244,79.3,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,1.70,3.500,70.058,78.7,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,1.80,3.500,67.890,78.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,1.90,3.500,65.740,77.4,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,2.00,3.500,63.608,76.8,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,2.10,3.500,61.494,76.1,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,2.20,3.500,59.398,75.5,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,2.30,3.500,57.320,74.8,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,2.40,3.500,55.260,74.2,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,2.50,3.500,53.218,73.5,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,2.60,3.500,51.194,72.9,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,2.70,3.500,49.188,72.2,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,2.80,3.500,47.200,71.6,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,2.90,3.500,45.230,70.9,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,3.00,3.500,43.278,70.3,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,3.10,3.500,41.344,69.6,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,3.20,3.500,39.428,69.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,3.30,3.500,37.530,68.3,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,3.40,3.500,35.650,67.7,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,3.50,3.500,33.788,67.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,3.60,3.500,31.944,66.4,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,3.70,3.500,30.118,65.7,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,3.80,3.500,28.310,65.1,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,3.90,3.500,26.520,64.4,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,4.00,3.500,24.748,63.8,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,4.10,3.500,22.994,63.1,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,4.20,3.500,21.258,62.5,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,4.30,3.500,19.540,61.8,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,4.40,3.500,17.840,61.2,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,4.50,3.500,16.158,60.6,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,4.60,3.500,14.494,59.9,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,4.70,3.500,12.848,59.3,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,4.80,3.500,11.220,58.6,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_05,4.90,3.500,9.610,58.0,Gentle Work-Zone Braking (-1.8 m/s^2)
+VEH_06,0.00,3.500,97.778,80.0,Standard Braking (-3.2 m/s^2)
+VEH_06,0.10,3.500,95.556,80.0,Standard Braking (-3.2 m/s^2)
+VEH_06,0.20,3.500,93.334,80.0,Standard Braking (-3.2 m/s^2)
+VEH_06,0.30,3.500,91.112,80.0,Standard Braking (-3.2 m/s^2)
+VEH_06,0.40,3.500,88.890,80.0,Standard Braking (-3.2 m/s^2)
+VEH_06,0.50,3.500,86.668,80.0,Standard Braking (-3.2 m/s^2)
+VEH_06,0.60,3.500,84.446,80.0,Standard Braking (-3.2 m/s^2)
+VEH_06,0.70,3.500,82.224,80.0,Standard Braking (-3.2 m/s^2)
+VEH_06,0.80,3.500,80.002,80.0,Standard Braking (-3.2 m/s^2)
+VEH_06,0.90,3.500,77.780,80.0,Standard Braking (-3.2 m/s^2)
+VEH_06,1.00,3.500,75.558,80.0,Standard Braking (-3.2 m/s^2)
+VEH_06,1.10,3.500,73.336,80.0,Standard Braking (-3.2 m/s^2)
+VEH_06,1.20,3.500,71.114,80.0,Standard Braking (-3.2 m/s^2)
+VEH_06,1.30,3.500,68.892,80.0,Standard Braking (-3.2 m/s^2)
+VEH_06,1.40,3.500,66.670,80.0,Standard Braking (-3.2 m/s^2)
+VEH_06,1.50,3.500,64.448,80.0,Standard Braking (-3.2 m/s^2)
+VEH_06,1.60,3.500,62.258,78.8,Standard Braking (-3.2 m/s^2)
+VEH_06,1.70,3.500,60.100,77.7,Standard Braking (-3.2 m/s^2)
+VEH_06,1.80,3.500,57.974,76.5,Standard Braking (-3.2 m/s^2)
+VEH_06,1.90,3.500,55.880,75.4,Standard Braking (-3.2 m/s^2)
+VEH_06,2.00,3.500,53.818,74.2,Standard Braking (-3.2 m/s^2)
+VEH_06,2.10,3.500,51.788,73.1,Standard Braking (-3.2 m/s^2)
+VEH_06,2.20,3.500,49.790,71.9,Standard Braking (-3.2 m/s^2)
+VEH_06,2.30,3.500,47.824,70.8,Standard Braking (-3.2 m/s^2)
+VEH_06,2.40,3.500,45.890,69.6,Standard Braking (-3.2 m/s^2)
+VEH_06,2.50,3.500,43.988,68.5,Standard Braking (-3.2 m/s^2)
+VEH_06,2.60,3.500,42.118,67.3,Standard Braking (-3.2 m/s^2)
+VEH_06,2.70,3.500,40.280,66.2,Standard Braking (-3.2 m/s^2)
+VEH_06,2.80,3.500,38.474,65.0,Standard Braking (-3.2 m/s^2)
+VEH_06,2.90,3.500,36.700,63.9,Standard Braking (-3.2 m/s^2)
+VEH_06,3.00,3.500,34.958,62.7,Standard Braking (-3.2 m/s^2)
+VEH_06,3.10,3.500,33.248,61.6,Standard Braking (-3.2 m/s^2)
+VEH_06,3.20,3.500,31.570,60.4,Standard Braking (-3.2 m/s^2)
+VEH_06,3.30,3.500,29.924,59.3,Standard Braking (-3.2 m/s^2)
+VEH_06,3.40,3.500,28.310,58.1,Standard Braking (-3.2 m/s^2)
+VEH_06,3.50,3.500,26.728,57.0,Standard Braking (-3.2 m/s^2)
+VEH_06,3.60,3.500,25.178,55.8,Standard Braking (-3.2 m/s^2)
+VEH_06,3.70,3.500,23.660,54.6,Standard Braking (-3.2 m/s^2)
+VEH_06,3.80,3.500,22.174,53.5,Standard Braking (-3.2 m/s^2)
+VEH_06,3.90,3.500,20.720,52.3,Standard Braking (-3.2 m/s^2)
+VEH_06,4.00,3.500,19.298,51.2,Standard Braking (-3.2 m/s^2)
+VEH_06,4.10,3.500,17.908,50.0,Standard Braking (-3.2 m/s^2)
+VEH_06,4.20,3.500,16.550,48.9,Standard Braking (-3.2 m/s^2)
+VEH_06,4.30,3.500,15.224,47.7,Standard Braking (-3.2 m/s^2)
+VEH_06,4.40,3.500,13.930,46.6,Standard Braking (-3.2 m/s^2)
+VEH_06,4.50,3.500,12.668,45.4,Standard Braking (-3.2 m/s^2)
+VEH_06,4.60,3.500,11.438,44.3,Standard Braking (-3.2 m/s^2)
+VEH_06,4.70,3.500,10.240,43.1,Standard Braking (-3.2 m/s^2)
+VEH_06,4.80,3.500,9.074,42.0,Standard Braking (-3.2 m/s^2)
+VEH_06,4.90,3.500,7.940,40.8,Standard Braking (-3.2 m/s^2)
+VEH_07,0.00,3.500,92.778,80.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,0.10,3.500,90.556,80.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,0.20,3.500,88.334,80.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,0.30,3.500,86.112,80.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,0.40,3.500,83.890,80.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,0.50,3.500,81.668,80.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,0.60,3.500,79.446,80.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,0.70,3.500,77.224,80.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,0.80,3.500,75.002,80.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,0.90,3.500,72.780,80.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,1.00,3.500,70.558,80.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,1.10,3.500,68.336,80.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,1.20,3.500,66.114,80.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,1.30,3.500,63.892,80.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,1.40,3.500,61.670,80.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,1.50,3.500,59.448,80.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,1.60,3.500,57.276,78.2,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,1.70,3.500,55.154,76.4,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,1.80,3.500,53.082,74.6,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,1.90,3.500,51.060,72.8,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,2.00,3.500,49.088,71.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,2.10,3.500,47.166,69.2,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,2.20,3.500,45.294,67.4,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,2.30,3.500,43.472,65.6,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,2.40,3.500,41.700,63.8,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,2.50,3.500,39.978,62.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,2.60,3.500,38.306,60.2,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,2.70,3.500,36.684,58.4,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,2.80,3.500,35.112,56.6,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,2.90,3.500,33.590,54.8,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,3.00,3.500,32.118,53.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,3.10,3.500,30.696,51.2,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,3.20,3.500,29.324,49.4,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,3.30,3.500,28.002,47.6,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,3.40,3.500,26.730,45.8,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,3.50,3.500,25.508,44.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,3.60,3.500,24.336,42.2,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,3.70,3.500,23.214,40.4,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,3.80,3.500,22.142,38.6,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,3.90,3.500,21.120,36.8,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,4.00,3.500,20.148,35.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,4.10,3.500,19.226,33.2,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,4.20,3.500,18.354,31.4,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,4.30,3.500,17.532,29.6,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,4.40,3.500,16.760,27.8,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,4.50,3.500,16.038,26.0,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,4.60,3.500,15.366,24.2,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,4.70,3.500,14.744,22.4,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,4.80,3.500,14.172,20.6,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_07,4.90,3.500,13.650,18.8,Hard Work-Zone Braking (-5.0 m/s^2)
+VEH_08,0.00,3.500,112.500,90.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,0.10,3.500,110.000,90.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,0.20,3.500,107.500,90.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,0.30,3.500,105.000,90.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,0.40,3.500,102.500,90.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,0.50,3.500,100.000,90.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,0.60,3.500,97.500,90.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,0.70,3.500,95.000,90.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,0.80,3.500,92.500,90.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,0.90,3.500,90.000,90.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,1.00,3.500,87.500,90.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,1.10,3.500,85.000,90.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,1.20,3.500,82.500,90.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,1.30,3.500,80.000,90.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,1.40,3.500,77.500,90.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,1.50,3.500,75.000,90.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,1.60,3.500,72.570,87.5,Emergency Braking (-7.0 m/s^2)
+VEH_08,1.70,3.500,70.210,85.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,1.80,3.500,67.920,82.4,Emergency Braking (-7.0 m/s^2)
+VEH_08,1.90,3.500,65.700,79.9,Emergency Braking (-7.0 m/s^2)
+VEH_08,2.00,3.500,63.550,77.4,Emergency Braking (-7.0 m/s^2)
+VEH_08,2.10,3.500,61.470,74.9,Emergency Braking (-7.0 m/s^2)
+VEH_08,2.20,3.500,59.460,72.4,Emergency Braking (-7.0 m/s^2)
+VEH_08,2.30,3.500,57.520,69.8,Emergency Braking (-7.0 m/s^2)
+VEH_08,2.40,3.500,55.650,67.3,Emergency Braking (-7.0 m/s^2)
+VEH_08,2.50,3.500,53.850,64.8,Emergency Braking (-7.0 m/s^2)
+VEH_08,2.60,3.500,52.120,62.3,Emergency Braking (-7.0 m/s^2)
+VEH_08,2.70,3.500,50.460,59.8,Emergency Braking (-7.0 m/s^2)
+VEH_08,2.80,3.500,48.870,57.2,Emergency Braking (-7.0 m/s^2)
+VEH_08,2.90,3.500,47.350,54.7,Emergency Braking (-7.0 m/s^2)
+VEH_08,3.00,3.500,45.900,52.2,Emergency Braking (-7.0 m/s^2)
+VEH_08,3.10,3.500,44.520,49.7,Emergency Braking (-7.0 m/s^2)
+VEH_08,3.20,3.500,43.210,47.2,Emergency Braking (-7.0 m/s^2)
+VEH_08,3.30,3.500,41.970,44.6,Emergency Braking (-7.0 m/s^2)
+VEH_08,3.40,3.500,40.800,42.1,Emergency Braking (-7.0 m/s^2)
+VEH_08,3.50,3.500,39.700,39.6,Emergency Braking (-7.0 m/s^2)
+VEH_08,3.60,3.500,38.670,37.1,Emergency Braking (-7.0 m/s^2)
+VEH_08,3.70,3.500,37.710,34.6,Emergency Braking (-7.0 m/s^2)
+VEH_08,3.80,3.500,36.820,32.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,3.90,3.500,36.000,29.5,Emergency Braking (-7.0 m/s^2)
+VEH_08,4.00,3.500,35.250,27.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,4.10,3.500,34.570,24.5,Emergency Braking (-7.0 m/s^2)
+VEH_08,4.20,3.500,33.960,22.0,Emergency Braking (-7.0 m/s^2)
+VEH_08,4.30,3.500,33.420,19.4,Emergency Braking (-7.0 m/s^2)
+VEH_08,4.40,3.500,32.950,16.9,Emergency Braking (-7.0 m/s^2)
+VEH_08,4.50,3.500,32.550,14.4,Emergency Braking (-7.0 m/s^2)
+VEH_08,4.60,3.500,32.220,11.9,Emergency Braking (-7.0 m/s^2)
+VEH_08,4.70,3.500,31.960,9.4,Emergency Braking (-7.0 m/s^2)
+VEH_08,4.80,3.500,31.770,6.8,Emergency Braking (-7.0 m/s^2)
+VEH_08,4.90,3.500,31.650,4.3,Emergency Braking (-7.0 m/s^2)
+VEH_09,0.00,7.000,98.056,70.0,Smooth Left Lane Change
+VEH_09,0.10,6.996,96.112,70.0,Smooth Left Lane Change
+VEH_09,0.20,6.985,94.168,70.0,Smooth Left Lane Change
+VEH_09,0.30,6.966,92.224,70.0,Smooth Left Lane Change
+VEH_09,0.40,6.942,90.280,70.0,Smooth Left Lane Change
+VEH_09,0.50,6.911,88.336,70.0,Smooth Left Lane Change
+VEH_09,0.60,6.875,86.392,70.0,Smooth Left Lane Change
+VEH_09,0.70,6.834,84.448,70.0,Smooth Left Lane Change
+VEH_09,0.80,6.790,82.504,70.0,Smooth Left Lane Change
+VEH_09,0.90,6.741,80.560,70.0,Smooth Left Lane Change
+VEH_09,1.00,6.689,78.616,70.0,Smooth Left Lane Change
+VEH_09,1.10,6.634,76.672,70.0,Smooth Left Lane Change
+VEH_09,1.20,6.578,74.728,70.0,Smooth Left Lane Change
+VEH_09,1.30,6.519,72.784,70.0,Smooth Left Lane Change
+VEH_09,1.40,6.460,70.840,70.0,Smooth Left Lane Change
+VEH_09,1.50,6.400,68.896,70.0,Smooth Left Lane Change
+VEH_09,1.60,6.340,66.952,70.0,Smooth Left Lane Change
+VEH_09,1.70,6.281,65.008,70.0,Smooth Left Lane Change
+VEH_09,1.80,6.222,63.064,70.0,Smooth Left Lane Change
+VEH_09,1.90,6.166,61.120,70.0,Smooth Left Lane Change
+VEH_09,2.00,6.111,59.176,70.0,Smooth Left Lane Change
+VEH_09,2.10,6.059,57.232,70.0,Smooth Left Lane Change
+VEH_09,2.20,6.010,55.288,70.0,Smooth Left Lane Change
+VEH_09,2.30,5.966,53.344,70.0,Smooth Left Lane Change
+VEH_09,2.40,5.925,51.400,70.0,Smooth Left Lane Change
+VEH_09,2.50,5.889,49.456,70.0,Smooth Left Lane Change
+VEH_09,2.60,5.858,47.512,70.0,Smooth Left Lane Change
+VEH_09,2.70,5.834,45.568,70.0,Smooth Left Lane Change
+VEH_09,2.80,5.815,43.624,70.0,Smooth Left Lane Change
+VEH_09,2.90,5.804,41.680,70.0,Smooth Left Lane Change
+VEH_09,3.00,5.800,39.736,70.0,Smooth Left Lane Change
+VEH_09,3.10,5.800,37.792,70.0,Smooth Left Lane Change
+VEH_09,3.20,5.800,35.848,70.0,Smooth Left Lane Change
+VEH_09,3.30,5.800,33.904,70.0,Smooth Left Lane Change
+VEH_09,3.40,5.800,31.960,70.0,Smooth Left Lane Change
+VEH_09,3.50,5.800,30.016,70.0,Smooth Left Lane Change
+VEH_09,3.60,5.800,28.072,70.0,Smooth Left Lane Change
+VEH_09,3.70,5.800,26.128,70.0,Smooth Left Lane Change
+VEH_09,3.80,5.800,24.184,70.0,Smooth Left Lane Change
+VEH_09,3.90,5.800,22.240,70.0,Smooth Left Lane Change
+VEH_09,4.00,5.800,20.296,70.0,Smooth Left Lane Change
+VEH_09,4.10,5.800,18.352,70.0,Smooth Left Lane Change
+VEH_09,4.20,5.800,16.408,70.0,Smooth Left Lane Change
+VEH_09,4.30,5.800,14.464,70.0,Smooth Left Lane Change
+VEH_09,4.40,5.800,12.520,70.0,Smooth Left Lane Change
+VEH_09,4.50,5.800,10.576,70.0,Smooth Left Lane Change
+VEH_09,4.60,5.800,8.632,70.0,Smooth Left Lane Change
+VEH_09,4.70,5.800,6.688,70.0,Smooth Left Lane Change
+VEH_09,4.80,5.800,4.744,70.0,Smooth Left Lane Change
+VEH_09,4.90,5.800,2.800,70.0,Smooth Left Lane Change
+VEH_10,0.00,0.500,98.056,70.0,Smooth Right Lane Change
+VEH_10,0.10,0.504,96.112,70.0,Smooth Right Lane Change
+VEH_10,0.20,0.515,94.168,70.0,Smooth Right Lane Change
+VEH_10,0.30,0.534,92.224,70.0,Smooth Right Lane Change
+VEH_10,0.40,0.558,90.280,70.0,Smooth Right Lane Change
+VEH_10,0.50,0.589,88.336,70.0,Smooth Right Lane Change
+VEH_10,0.60,0.625,86.392,70.0,Smooth Right Lane Change
+VEH_10,0.70,0.666,84.448,70.0,Smooth Right Lane Change
+VEH_10,0.80,0.710,82.504,70.0,Smooth Right Lane Change
+VEH_10,0.90,0.759,80.560,70.0,Smooth Right Lane Change
+VEH_10,1.00,0.811,78.616,70.0,Smooth Right Lane Change
+VEH_10,1.10,0.866,76.672,70.0,Smooth Right Lane Change
+VEH_10,1.20,0.922,74.728,70.0,Smooth Right Lane Change
+VEH_10,1.30,0.981,72.784,70.0,Smooth Right Lane Change
+VEH_10,1.40,1.040,70.840,70.0,Smooth Right Lane Change
+VEH_10,1.50,1.100,68.896,70.0,Smooth Right Lane Change
+VEH_10,1.60,1.160,66.952,70.0,Smooth Right Lane Change
+VEH_10,1.70,1.219,65.008,70.0,Smooth Right Lane Change
+VEH_10,1.80,1.278,63.064,70.0,Smooth Right Lane Change
+VEH_10,1.90,1.334,61.120,70.0,Smooth Right Lane Change
+VEH_10,2.00,1.389,59.176,70.0,Smooth Right Lane Change
+VEH_10,2.10,1.441,57.232,70.0,Smooth Right Lane Change
+VEH_10,2.20,1.490,55.288,70.0,Smooth Right Lane Change
+VEH_10,2.30,1.534,53.344,70.0,Smooth Right Lane Change
+VEH_10,2.40,1.575,51.400,70.0,Smooth Right Lane Change
+VEH_10,2.50,1.611,49.456,70.0,Smooth Right Lane Change
+VEH_10,2.60,1.642,47.512,70.0,Smooth Right Lane Change
+VEH_10,2.70,1.666,45.568,70.0,Smooth Right Lane Change
+VEH_10,2.80,1.685,43.624,70.0,Smooth Right Lane Change
+VEH_10,2.90,1.696,41.680,70.0,Smooth Right Lane Change
+VEH_10,3.00,1.700,39.736,70.0,Smooth Right Lane Change
+VEH_10,3.10,1.700,37.792,70.0,Smooth Right Lane Change
+VEH_10,3.20,1.700,35.848,70.0,Smooth Right Lane Change
+VEH_10,3.30,1.700,33.904,70.0,Smooth Right Lane Change
+VEH_10,3.40,1.700,31.960,70.0,Smooth Right Lane Change
+VEH_10,3.50,1.700,30.016,70.0,Smooth Right Lane Change
+VEH_10,3.60,1.700,28.072,70.0,Smooth Right Lane Change
+VEH_10,3.70,1.700,26.128,70.0,Smooth Right Lane Change
+VEH_10,3.80,1.700,24.184,70.0,Smooth Right Lane Change
+VEH_10,3.90,1.700,22.240,70.0,Smooth Right Lane Change
+VEH_10,4.00,1.700,20.296,70.0,Smooth Right Lane Change
+VEH_10,4.10,1.700,18.352,70.0,Smooth Right Lane Change
+VEH_10,4.20,1.700,16.408,70.0,Smooth Right Lane Change
+VEH_10,4.30,1.700,14.464,70.0,Smooth Right Lane Change
+VEH_10,4.40,1.700,12.520,70.0,Smooth Right Lane Change
+VEH_10,4.50,1.700,10.576,70.0,Smooth Right Lane Change
+VEH_10,4.60,1.700,8.632,70.0,Smooth Right Lane Change
+VEH_10,4.70,1.700,6.688,70.0,Smooth Right Lane Change
+VEH_10,4.80,1.700,4.744,70.0,Smooth Right Lane Change
+VEH_10,4.90,1.700,2.800,70.0,Smooth Right Lane Change
+VEH_11,0.00,3.500,83.333,60.0,Work-Zone Taper Swerve Left
+VEH_11,0.10,3.495,81.666,60.0,Work-Zone Taper Swerve Left
+VEH_11,0.20,3.481,79.999,60.0,Work-Zone Taper Swerve Left
+VEH_11,0.30,3.458,78.332,60.0,Work-Zone Taper Swerve Left
+VEH_11,0.40,3.427,76.665,60.0,Work-Zone Taper Swerve Left
+VEH_11,0.50,3.389,74.998,60.0,Work-Zone Taper Swerve Left
+VEH_11,0.60,3.344,73.331,60.0,Work-Zone Taper Swerve Left
+VEH_11,0.70,3.293,71.664,60.0,Work-Zone Taper Swerve Left
+VEH_11,0.80,3.237,69.997,60.0,Work-Zone Taper Swerve Left
+VEH_11,0.90,3.176,68.330,60.0,Work-Zone Taper Swerve Left
+VEH_11,1.00,3.111,66.663,60.0,Work-Zone Taper Swerve Left
+VEH_11,1.10,3.043,64.996,60.0,Work-Zone Taper Swerve Left
+VEH_11,1.20,2.972,63.329,60.0,Work-Zone Taper Swerve Left
+VEH_11,1.30,2.899,61.662,60.0,Work-Zone Taper Swerve Left
+VEH_11,1.40,2.825,59.995,60.0,Work-Zone Taper Swerve Left
+VEH_11,1.50,2.750,58.328,60.0,Work-Zone Taper Swerve Left
+VEH_11,1.60,2.675,56.666,59.8,Work-Zone Taper Swerve Left
+VEH_11,1.70,2.601,55.009,59.7,Work-Zone Taper Swerve Left
+VEH_11,1.80,2.528,53.357,59.5,Work-Zone Taper Swerve Left
+VEH_11,1.90,2.457,51.710,59.3,Work-Zone Taper Swerve Left
+VEH_11,2.00,2.389,50.068,59.1,Work-Zone Taper Swerve Left
+VEH_11,2.10,2.324,48.431,58.9,Work-Zone Taper Swerve Left
+VEH_11,2.20,2.263,46.799,58.8,Work-Zone Taper Swerve Left
+VEH_11,2.30,2.207,45.172,58.6,Work-Zone Taper Swerve Left
+VEH_11,2.40,2.156,43.550,58.4,Work-Zone Taper Swerve Left
+VEH_11,2.50,2.111,41.933,58.2,Work-Zone Taper Swerve Left
+VEH_11,2.60,2.073,40.321,58.0,Work-Zone Taper Swerve Left
+VEH_11,2.70,2.042,38.714,57.9,Work-Zone Taper Swerve Left
+VEH_11,2.80,2.019,37.112,57.7,Work-Zone Taper Swerve Left
+VEH_11,2.90,2.005,35.515,57.5,Work-Zone Taper Swerve Left
+VEH_11,3.00,2.000,33.923,57.3,Work-Zone Taper Swerve Left
+VEH_11,3.10,2.000,32.336,57.1,Work-Zone Taper Swerve Left
+VEH_11,3.20,2.000,30.754,57.0,Work-Zone Taper Swerve Left
+VEH_11,3.30,2.000,29.177,56.8,Work-Zone Taper Swerve Left
+VEH_11,3.40,2.000,27.605,56.6,Work-Zone Taper Swerve Left
+VEH_11,3.50,2.000,26.038,56.4,Work-Zone Taper Swerve Left
+VEH_11,3.60,2.000,24.476,56.2,Work-Zone Taper Swerve Left
+VEH_11,3.70,2.000,22.919,56.1,Work-Zone Taper Swerve Left
+VEH_11,3.80,2.000,21.367,55.9,Work-Zone Taper Swerve Left
+VEH_11,3.90,2.000,19.820,55.7,Work-Zone Taper Swerve Left
+VEH_11,4.00,2.000,18.278,55.5,Work-Zone Taper Swerve Left
+VEH_11,4.10,2.000,16.741,55.3,Work-Zone Taper Swerve Left
+VEH_11,4.20,2.000,15.209,55.2,Work-Zone Taper Swerve Left
+VEH_11,4.30,2.000,13.682,55.0,Work-Zone Taper Swerve Left
+VEH_11,4.40,2.000,12.160,54.8,Work-Zone Taper Swerve Left
+VEH_11,4.50,2.000,10.643,54.6,Work-Zone Taper Swerve Left
+VEH_11,4.60,2.000,9.131,54.4,Work-Zone Taper Swerve Left
+VEH_11,4.70,2.000,7.624,54.3,Work-Zone Taper Swerve Left
+VEH_11,4.80,2.000,6.122,54.1,Work-Zone Taper Swerve Left
+VEH_11,4.90,2.000,4.625,53.9,Work-Zone Taper Swerve Left
+VEH_12,0.00,3.000,88.200,64.8,Rapid Evasive Swerve Right
+VEH_12,0.10,3.007,86.400,64.8,Rapid Evasive Swerve Right
+VEH_12,0.20,3.028,84.600,64.8,Rapid Evasive Swerve Right
+VEH_12,0.30,3.062,82.800,64.8,Rapid Evasive Swerve Right
+VEH_12,0.40,3.107,81.000,64.8,Rapid Evasive Swerve Right
+VEH_12,0.50,3.163,79.200,64.8,Rapid Evasive Swerve Right
+VEH_12,0.60,3.229,77.400,64.8,Rapid Evasive Swerve Right
+VEH_12,0.70,3.303,75.600,64.8,Rapid Evasive Swerve Right
+VEH_12,0.80,3.386,73.800,64.8,Rapid Evasive Swerve Right
+VEH_12,0.90,3.475,72.000,64.8,Rapid Evasive Swerve Right
+VEH_12,1.00,3.570,70.200,64.8,Rapid Evasive Swerve Right
+VEH_12,1.10,3.670,68.400,64.8,Rapid Evasive Swerve Right
+VEH_12,1.20,3.774,66.600,64.8,Rapid Evasive Swerve Right
+VEH_12,1.30,3.881,64.800,64.8,Rapid Evasive Swerve Right
+VEH_12,1.40,3.990,63.000,64.8,Rapid Evasive Swerve Right
+VEH_12,1.50,4.100,61.200,64.8,Rapid Evasive Swerve Right
+VEH_12,1.60,4.210,59.410,64.4,Rapid Evasive Swerve Right
+VEH_12,1.70,4.319,57.630,64.1,Rapid Evasive Swerve Right
+VEH_12,1.80,4.426,55.860,63.7,Rapid Evasive Swerve Right
+VEH_12,1.90,4.530,54.100,63.4,Rapid Evasive Swerve Right
+VEH_12,2.00,4.630,52.350,63.0,Rapid Evasive Swerve Right
+VEH_12,2.10,4.725,50.610,62.6,Rapid Evasive Swerve Right
+VEH_12,2.20,4.814,48.880,62.3,Rapid Evasive Swerve Right
+VEH_12,2.30,4.897,47.160,61.9,Rapid Evasive Swerve Right
+VEH_12,2.40,4.971,45.450,61.6,Rapid Evasive Swerve Right
+VEH_12,2.50,5.037,43.750,61.2,Rapid Evasive Swerve Right
+VEH_12,2.60,5.093,42.060,60.8,Rapid Evasive Swerve Right
+VEH_12,2.70,5.138,40.380,60.5,Rapid Evasive Swerve Right
+VEH_12,2.80,5.172,38.710,60.1,Rapid Evasive Swerve Right
+VEH_12,2.90,5.193,37.050,59.8,Rapid Evasive Swerve Right
+VEH_12,3.00,5.200,35.400,59.4,Rapid Evasive Swerve Right
+VEH_12,3.10,5.200,33.760,59.0,Rapid Evasive Swerve Right
+VEH_12,3.20,5.200,32.130,58.7,Rapid Evasive Swerve Right
+VEH_12,3.30,5.200,30.510,58.3,Rapid Evasive Swerve Right
+VEH_12,3.40,5.200,28.900,58.0,Rapid Evasive Swerve Right
+VEH_12,3.50,5.200,27.300,57.6,Rapid Evasive Swerve Right
+VEH_12,3.60,5.200,25.710,57.2,Rapid Evasive Swerve Right
+VEH_12,3.70,5.200,24.130,56.9,Rapid Evasive Swerve Right
+VEH_12,3.80,5.200,22.560,56.5,Rapid Evasive Swerve Right
+VEH_12,3.90,5.200,21.000,56.2,Rapid Evasive Swerve Right
+VEH_12,4.00,5.200,19.450,55.8,Rapid Evasive Swerve Right
+VEH_12,4.10,5.200,17.910,55.4,Rapid Evasive Swerve Right
+VEH_12,4.20,5.200,16.380,55.1,Rapid Evasive Swerve Right
+VEH_12,4.30,5.200,14.860,54.7,Rapid Evasive Swerve Right
+VEH_12,4.40,5.200,13.350,54.4,Rapid Evasive Swerve Right
+VEH_12,4.50,5.200,11.850,54.0,Rapid Evasive Swerve Right
+VEH_12,4.60,5.200,10.360,53.6,Rapid Evasive Swerve Right
+VEH_12,4.70,5.200,8.880,53.3,Rapid Evasive Swerve Right
+VEH_12,4.80,5.200,7.410,52.9,Rapid Evasive Swerve Right
+VEH_12,4.90,5.200,5.950,52.6,Rapid Evasive Swerve Right
+VEH_13,0.00,2.500,73.500,54.0,Drift towards Cones (Shallow)
+VEH_13,0.10,2.420,72.000,54.0,Drift towards Cones (Shallow)
+VEH_13,0.20,2.340,70.500,54.0,Drift towards Cones (Shallow)
+VEH_13,0.30,2.260,69.000,54.0,Drift towards Cones (Shallow)
+VEH_13,0.40,2.180,67.500,54.0,Drift towards Cones (Shallow)
+VEH_13,0.50,2.100,66.000,54.0,Drift towards Cones (Shallow)
+VEH_13,0.60,2.020,64.500,54.0,Drift towards Cones (Shallow)
+VEH_13,0.70,1.940,63.000,54.0,Drift towards Cones (Shallow)
+VEH_13,0.80,1.860,61.500,54.0,Drift towards Cones (Shallow)
+VEH_13,0.90,1.780,60.000,54.0,Drift towards Cones (Shallow)
+VEH_13,1.00,1.700,58.500,54.0,Drift towards Cones (Shallow)
+VEH_13,1.10,1.620,57.000,54.0,Drift towards Cones (Shallow)
+VEH_13,1.20,1.540,55.500,54.0,Drift towards Cones (Shallow)
+VEH_13,1.30,1.460,54.000,54.0,Drift towards Cones (Shallow)
+VEH_13,1.40,1.380,52.500,54.0,Drift towards Cones (Shallow)
+VEH_13,1.50,1.300,51.000,54.0,Drift towards Cones (Shallow)
+VEH_13,1.60,1.220,49.500,54.0,Drift towards Cones (Shallow)
+VEH_13,1.70,1.140,48.000,54.0,Drift towards Cones (Shallow)
+VEH_13,1.80,1.060,46.500,54.0,Drift towards Cones (Shallow)
+VEH_13,1.90,0.980,45.000,54.0,Drift towards Cones (Shallow)
+VEH_13,2.00,0.900,43.500,54.0,Drift towards Cones (Shallow)
+VEH_13,2.10,0.820,42.000,54.0,Drift towards Cones (Shallow)
+VEH_13,2.20,0.740,40.500,54.0,Drift towards Cones (Shallow)
+VEH_13,2.30,0.660,39.000,54.0,Drift towards Cones (Shallow)
+VEH_13,2.40,0.580,37.500,54.0,Drift towards Cones (Shallow)
+VEH_13,2.50,0.500,36.000,54.0,Drift towards Cones (Shallow)
+VEH_13,2.60,0.420,34.500,54.0,Drift towards Cones (Shallow)
+VEH_13,2.70,0.340,33.000,54.0,Drift towards Cones (Shallow)
+VEH_13,2.80,0.260,31.500,54.0,Drift towards Cones (Shallow)
+VEH_13,2.90,0.180,30.000,54.0,Drift towards Cones (Shallow)
+VEH_13,3.00,0.100,28.500,54.0,Drift towards Cones (Shallow)
+VEH_13,3.10,0.020,27.000,54.0,Drift towards Cones (Shallow)
+VEH_13,3.20,-0.060,25.500,54.0,Drift towards Cones (Shallow)
+VEH_13,3.30,-0.140,24.000,54.0,Drift towards Cones (Shallow)
+VEH_13,3.40,-0.220,22.500,54.0,Drift towards Cones (Shallow)
+VEH_13,3.50,-0.300,21.000,54.0,Drift towards Cones (Shallow)
+VEH_13,3.60,-0.380,19.500,54.0,Drift towards Cones (Shallow)
+VEH_13,3.70,-0.460,18.000,54.0,Drift towards Cones (Shallow)
+VEH_13,3.80,-0.540,16.500,54.0,Drift towards Cones (Shallow)
+VEH_13,3.90,-0.620,15.000,54.0,Drift towards Cones (Shallow)
+VEH_13,4.00,-0.700,13.500,54.0,Drift towards Cones (Shallow)
+VEH_13,4.10,-0.780,12.000,54.0,Drift towards Cones (Shallow)
+VEH_13,4.20,-0.860,10.500,54.0,Drift towards Cones (Shallow)
+VEH_13,4.30,-0.940,9.000,54.0,Drift towards Cones (Shallow)
+VEH_13,4.40,-1.020,7.500,54.0,Drift towards Cones (Shallow)
+VEH_13,4.50,-1.100,6.000,54.0,Drift towards Cones (Shallow)
+VEH_13,4.60,-1.180,4.500,54.0,Drift towards Cones (Shallow)
+VEH_13,4.70,-1.260,3.000,54.0,Drift towards Cones (Shallow)
+VEH_13,4.80,-1.340,1.500,54.0,Drift towards Cones (Shallow)
+VEH_13,4.90,-1.420,0.000,54.0,Drift towards Cones (Shallow)
+VEH_14,0.00,2.000,78.333,60.0,Direct Work-Zone Encroachment
+VEH_14,0.10,1.840,76.666,60.0,Direct Work-Zone Encroachment
+VEH_14,0.20,1.680,74.999,60.0,Direct Work-Zone Encroachment
+VEH_14,0.30,1.520,73.332,60.0,Direct Work-Zone Encroachment
+VEH_14,0.40,1.360,71.665,60.0,Direct Work-Zone Encroachment
+VEH_14,0.50,1.200,69.998,60.0,Direct Work-Zone Encroachment
+VEH_14,0.60,1.040,68.331,60.0,Direct Work-Zone Encroachment
+VEH_14,0.70,0.880,66.664,60.0,Direct Work-Zone Encroachment
+VEH_14,0.80,0.720,64.997,60.0,Direct Work-Zone Encroachment
+VEH_14,0.90,0.560,63.330,60.0,Direct Work-Zone Encroachment
+VEH_14,1.00,0.400,61.663,60.0,Direct Work-Zone Encroachment
+VEH_14,1.10,0.240,59.996,60.0,Direct Work-Zone Encroachment
+VEH_14,1.20,0.080,58.329,60.0,Direct Work-Zone Encroachment
+VEH_14,1.30,-0.080,56.662,60.0,Direct Work-Zone Encroachment
+VEH_14,1.40,-0.240,54.995,60.0,Direct Work-Zone Encroachment
+VEH_14,1.50,-0.400,53.328,60.0,Direct Work-Zone Encroachment
+VEH_14,1.60,-0.560,51.661,60.0,Direct Work-Zone Encroachment
+VEH_14,1.70,-0.720,49.994,60.0,Direct Work-Zone Encroachment
+VEH_14,1.80,-0.880,48.327,60.0,Direct Work-Zone Encroachment
+VEH_14,1.90,-1.040,46.660,60.0,Direct Work-Zone Encroachment
+VEH_14,2.00,-1.200,44.993,60.0,Direct Work-Zone Encroachment
+VEH_14,2.10,-1.360,43.326,60.0,Direct Work-Zone Encroachment
+VEH_14,2.20,-1.520,41.659,60.0,Direct Work-Zone Encroachment
+VEH_14,2.30,-1.680,39.992,60.0,Direct Work-Zone Encroachment
+VEH_14,2.40,-1.840,38.325,60.0,Direct Work-Zone Encroachment
+VEH_14,2.50,-2.000,36.658,60.0,Direct Work-Zone Encroachment
+VEH_14,2.60,-2.160,34.991,60.0,Direct Work-Zone Encroachment
+VEH_14,2.70,-2.320,33.324,60.0,Direct Work-Zone Encroachment
+VEH_14,2.80,-2.480,31.657,60.0,Direct Work-Zone Encroachment
+VEH_14,2.90,-2.640,29.990,60.0,Direct Work-Zone Encroachment
+VEH_14,3.00,-2.800,28.323,60.0,Direct Work-Zone Encroachment
+VEH_14,3.10,-2.960,26.656,60.0,Direct Work-Zone Encroachment
+VEH_14,3.20,-3.120,24.989,60.0,Direct Work-Zone Encroachment
+VEH_14,3.30,-3.280,23.322,60.0,Direct Work-Zone Encroachment
+VEH_14,3.40,-3.440,21.655,60.0,Direct Work-Zone Encroachment
+VEH_14,3.50,-3.600,19.988,60.0,Direct Work-Zone Encroachment
+VEH_14,3.60,-3.760,18.321,60.0,Direct Work-Zone Encroachment
+VEH_14,3.70,-3.920,16.654,60.0,Direct Work-Zone Encroachment
+VEH_14,3.80,-4.080,14.987,60.0,Direct Work-Zone Encroachment
+VEH_14,3.90,-4.240,13.320,60.0,Direct Work-Zone Encroachment
+VEH_14,4.00,-4.400,11.653,60.0,Direct Work-Zone Encroachment
+VEH_14,4.10,-4.560,9.986,60.0,Direct Work-Zone Encroachment
+VEH_14,4.20,-4.720,8.319,60.0,Direct Work-Zone Encroachment
+VEH_14,4.30,-4.880,6.652,60.0,Direct Work-Zone Encroachment
+VEH_14,4.40,-5.040,4.985,60.0,Direct Work-Zone Encroachment
+VEH_14,4.50,-5.200,3.318,60.0,Direct Work-Zone Encroachment
+VEH_14,4.60,-5.360,1.651,60.0,Direct Work-Zone Encroachment
+VEH_14,4.70,-5.520,-0.016,60.0,Direct Work-Zone Encroachment
+VEH_14,4.80,-5.680,-1.683,60.0,Direct Work-Zone Encroachment
+VEH_14,4.90,-5.840,-3.350,60.0,Direct Work-Zone Encroachment
+VEH_15,0.00,3.000,98.000,72.0,Distracted Driver Incline Drift
+VEH_15,0.10,2.890,96.000,72.0,Distracted Driver Incline Drift
+VEH_15,0.20,2.780,94.000,72.0,Distracted Driver Incline Drift
+VEH_15,0.30,2.670,92.000,72.0,Distracted Driver Incline Drift
+VEH_15,0.40,2.560,90.000,72.0,Distracted Driver Incline Drift
+VEH_15,0.50,2.450,88.000,72.0,Distracted Driver Incline Drift
+VEH_15,0.60,2.340,86.000,72.0,Distracted Driver Incline Drift
+VEH_15,0.70,2.230,84.000,72.0,Distracted Driver Incline Drift
+VEH_15,0.80,2.120,82.000,72.0,Distracted Driver Incline Drift
+VEH_15,0.90,2.010,80.000,72.0,Distracted Driver Incline Drift
+VEH_15,1.00,1.900,78.000,72.0,Distracted Driver Incline Drift
+VEH_15,1.10,1.790,76.000,72.0,Distracted Driver Incline Drift
+VEH_15,1.20,1.680,74.000,72.0,Distracted Driver Incline Drift
+VEH_15,1.30,1.570,72.000,72.0,Distracted Driver Incline Drift
+VEH_15,1.40,1.460,70.000,72.0,Distracted Driver Incline Drift
+VEH_15,1.50,1.350,68.000,72.0,Distracted Driver Incline Drift
+VEH_15,1.60,1.240,66.000,72.0,Distracted Driver Incline Drift
+VEH_15,1.70,1.130,64.000,72.0,Distracted Driver Incline Drift
+VEH_15,1.80,1.020,62.000,72.0,Distracted Driver Incline Drift
+VEH_15,1.90,0.910,60.000,72.0,Distracted Driver Incline Drift
+VEH_15,2.00,0.800,58.000,72.0,Distracted Driver Incline Drift
+VEH_15,2.10,0.690,56.000,72.0,Distracted Driver Incline Drift
+VEH_15,2.20,0.580,54.000,72.0,Distracted Driver Incline Drift
+VEH_15,2.30,0.470,52.000,72.0,Distracted Driver Incline Drift
+VEH_15,2.40,0.360,50.000,72.0,Distracted Driver Incline Drift
+VEH_15,2.50,0.250,48.000,72.0,Distracted Driver Incline Drift
+VEH_15,2.60,0.140,46.000,72.0,Distracted Driver Incline Drift
+VEH_15,2.70,0.030,44.000,72.0,Distracted Driver Incline Drift
+VEH_15,2.80,-0.080,42.000,72.0,Distracted Driver Incline Drift
+VEH_15,2.90,-0.190,40.000,72.0,Distracted Driver Incline Drift
+VEH_15,3.00,-0.300,38.000,72.0,Distracted Driver Incline Drift
+VEH_15,3.10,-0.410,36.000,72.0,Distracted Driver Incline Drift
+VEH_15,3.20,-0.520,34.000,72.0,Distracted Driver Incline Drift
+VEH_15,3.30,-0.630,32.000,72.0,Distracted Driver Incline Drift
+VEH_15,3.40,-0.740,30.000,72.0,Distracted Driver Incline Drift
+VEH_15,3.50,-0.850,28.000,72.0,Distracted Driver Incline Drift
+VEH_15,3.60,-0.960,26.000,72.0,Distracted Driver Incline Drift
+VEH_15,3.70,-1.070,24.000,72.0,Distracted Driver Incline Drift
+VEH_15,3.80,-1.180,22.000,72.0,Distracted Driver Incline Drift
+VEH_15,3.90,-1.290,20.000,72.0,Distracted Driver Incline Drift
+VEH_15,4.00,-1.400,18.000,72.0,Distracted Driver Incline Drift
+VEH_15,4.10,-1.510,16.000,72.0,Distracted Driver Incline Drift
+VEH_15,4.20,-1.620,14.000,72.0,Distracted Driver Incline Drift
+VEH_15,4.30,-1.730,12.000,72.0,Distracted Driver Incline Drift
+VEH_15,4.40,-1.840,10.000,72.0,Distracted Driver Incline Drift
+VEH_15,4.50,-1.950,8.000,72.0,Distracted Driver Incline Drift
+VEH_15,4.60,-2.060,6.000,72.0,Distracted Driver Incline Drift
+VEH_15,4.70,-2.170,4.000,72.0,Distracted Driver Incline Drift
+VEH_15,4.80,-2.280,2.000,72.0,Distracted Driver Incline Drift
+VEH_15,4.90,-2.390,0.000,72.0,Distracted Driver Incline Drift
+VEH_16,0.00,2.500,107.778,80.0,Aggressive Work-Zone Breach
+VEH_16,0.10,2.300,105.556,80.0,Aggressive Work-Zone Breach
+VEH_16,0.20,2.100,103.334,80.0,Aggressive Work-Zone Breach
+VEH_16,0.30,1.900,101.112,80.0,Aggressive Work-Zone Breach
+VEH_16,0.40,1.700,98.890,80.0,Aggressive Work-Zone Breach
+VEH_16,0.50,1.500,96.668,80.0,Aggressive Work-Zone Breach
+VEH_16,0.60,1.300,94.446,80.0,Aggressive Work-Zone Breach
+VEH_16,0.70,1.100,92.224,80.0,Aggressive Work-Zone Breach
+VEH_16,0.80,0.900,90.002,80.0,Aggressive Work-Zone Breach
+VEH_16,0.90,0.700,87.780,80.0,Aggressive Work-Zone Breach
+VEH_16,1.00,0.500,85.558,80.0,Aggressive Work-Zone Breach
+VEH_16,1.10,0.300,83.336,80.0,Aggressive Work-Zone Breach
+VEH_16,1.20,0.100,81.114,80.0,Aggressive Work-Zone Breach
+VEH_16,1.30,-0.100,78.892,80.0,Aggressive Work-Zone Breach
+VEH_16,1.40,-0.300,76.670,80.0,Aggressive Work-Zone Breach
+VEH_16,1.50,-0.500,74.448,80.0,Aggressive Work-Zone Breach
+VEH_16,1.60,-0.700,72.226,80.0,Aggressive Work-Zone Breach
+VEH_16,1.70,-0.900,70.004,80.0,Aggressive Work-Zone Breach
+VEH_16,1.80,-1.100,67.782,80.0,Aggressive Work-Zone Breach
+VEH_16,1.90,-1.300,65.560,80.0,Aggressive Work-Zone Breach
+VEH_16,2.00,-1.500,63.338,80.0,Aggressive Work-Zone Breach
+VEH_16,2.10,-1.700,61.116,80.0,Aggressive Work-Zone Breach
+VEH_16,2.20,-1.900,58.894,80.0,Aggressive Work-Zone Breach
+VEH_16,2.30,-2.100,56.672,80.0,Aggressive Work-Zone Breach
+VEH_16,2.40,-2.300,54.450,80.0,Aggressive Work-Zone Breach
+VEH_16,2.50,-2.500,52.228,80.0,Aggressive Work-Zone Breach
+VEH_16,2.60,-2.700,50.006,80.0,Aggressive Work-Zone Breach
+VEH_16,2.70,-2.900,47.784,80.0,Aggressive Work-Zone Breach
+VEH_16,2.80,-3.100,45.562,80.0,Aggressive Work-Zone Breach
+VEH_16,2.90,-3.300,43.340,80.0,Aggressive Work-Zone Breach
+VEH_16,3.00,-3.500,41.118,80.0,Aggressive Work-Zone Breach
+VEH_16,3.10,-3.700,38.896,80.0,Aggressive Work-Zone Breach
+VEH_16,3.20,-3.900,36.674,80.0,Aggressive Work-Zone Breach
+VEH_16,3.30,-4.100,34.452,80.0,Aggressive Work-Zone Breach
+VEH_16,3.40,-4.300,32.230,80.0,Aggressive Work-Zone Breach
+VEH_16,3.50,-4.500,30.008,80.0,Aggressive Work-Zone Breach
+VEH_16,3.60,-4.700,27.786,80.0,Aggressive Work-Zone Breach
+VEH_16,3.70,-4.900,25.564,80.0,Aggressive Work-Zone Breach
+VEH_16,3.80,-5.100,23.342,80.0,Aggressive Work-Zone Breach
+VEH_16,3.90,-5.300,21.120,80.0,Aggressive Work-Zone Breach
+VEH_16,4.00,-5.500,18.898,80.0,Aggressive Work-Zone Breach
+VEH_16,4.10,-5.700,16.676,80.0,Aggressive Work-Zone Breach
+VEH_16,4.20,-5.900,14.454,80.0,Aggressive Work-Zone Breach
+VEH_16,4.30,-6.100,12.232,80.0,Aggressive Work-Zone Breach
+VEH_16,4.40,-6.300,10.010,80.0,Aggressive Work-Zone Breach
+VEH_16,4.50,-6.500,7.788,80.0,Aggressive Work-Zone Breach
+VEH_16,4.60,-6.700,5.566,80.0,Aggressive Work-Zone Breach
+VEH_16,4.70,-6.900,3.344,80.0,Aggressive Work-Zone Breach
+VEH_16,4.80,-7.100,1.122,80.0,Aggressive Work-Zone Breach
+VEH_16,4.90,-7.300,-1.100,80.0,Aggressive Work-Zone Breach
+VEH_17,0.00,3.500,29.445,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,0.10,3.500,28.890,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,0.20,3.500,28.335,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,0.30,3.500,27.780,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,0.40,3.500,27.225,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,0.50,3.500,26.670,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,0.60,3.500,26.115,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,0.70,3.500,25.560,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,0.80,3.500,25.005,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,0.90,3.500,24.450,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,1.00,3.500,23.895,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,1.10,3.500,23.340,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,1.20,3.500,22.785,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,1.30,3.500,22.230,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,1.40,3.500,21.675,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,1.50,3.500,21.120,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,1.60,3.500,20.565,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,1.70,3.500,20.010,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,1.80,3.500,19.455,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,1.90,3.500,18.900,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,2.00,3.500,18.345,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,2.10,3.500,17.790,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,2.20,3.500,17.235,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,2.30,3.500,16.680,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,2.40,3.500,16.125,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,2.50,3.500,15.570,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,2.60,3.500,15.015,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,2.70,3.500,14.460,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,2.80,3.500,13.905,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,2.90,3.500,13.350,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,3.00,3.500,12.795,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,3.10,3.500,12.240,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,3.20,3.500,11.685,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,3.30,3.500,11.130,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,3.40,3.500,10.575,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,3.50,3.500,10.020,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,3.60,3.500,9.465,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,3.70,3.500,8.910,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,3.80,3.500,8.355,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,3.90,3.500,7.800,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,4.00,3.500,7.245,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,4.10,3.500,6.690,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,4.20,3.500,6.135,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,4.30,3.500,5.580,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,4.40,3.500,5.025,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,4.50,3.500,4.470,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,4.60,3.500,3.915,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,4.70,3.500,3.360,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,4.80,3.500,2.805,20.0,Work-Zone Crawl (20 km/h)
+VEH_17,4.90,3.500,2.250,20.0,Work-Zone Crawl (20 km/h)
+VEH_18,0.00,3.500,19.722,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,0.10,3.500,19.444,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,0.20,3.500,19.166,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,0.30,3.500,18.888,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,0.40,3.500,18.610,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,0.50,3.500,18.332,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,0.60,3.500,18.054,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,0.70,3.500,17.776,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,0.80,3.500,17.498,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,0.90,3.500,17.220,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,1.00,3.500,16.942,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,1.10,3.500,16.664,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,1.20,3.500,16.386,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,1.30,3.500,16.108,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,1.40,3.500,15.830,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,1.50,3.500,15.552,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,1.60,3.500,15.274,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,1.70,3.500,14.996,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,1.80,3.500,14.718,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,1.90,3.500,14.440,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,2.00,3.500,14.162,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,2.10,3.500,13.884,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,2.20,3.500,13.606,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,2.30,3.500,13.328,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,2.40,3.500,13.050,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,2.50,3.500,12.772,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,2.60,3.500,12.494,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,2.70,3.500,12.216,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,2.80,3.500,11.938,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,2.90,3.500,11.660,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,3.00,3.500,11.382,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,3.10,3.500,11.104,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,3.20,3.500,10.826,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,3.30,3.500,10.548,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,3.40,3.500,10.270,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,3.50,3.500,9.992,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,3.60,3.500,9.714,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,3.70,3.500,9.436,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,3.80,3.500,9.158,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,3.90,3.500,8.880,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,4.00,3.500,8.602,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,4.10,3.500,8.324,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,4.20,3.500,8.046,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,4.30,3.500,7.768,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,4.40,3.500,7.490,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,4.50,3.500,7.212,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,4.60,3.500,6.934,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,4.70,3.500,6.656,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,4.80,3.500,6.378,10.0,Stop-and-Go Creep (10 km/h)
+VEH_18,4.90,3.500,6.100,10.0,Stop-and-Go Creep (10 km/h)
+VEH_19,0.00,3.500,34.500,18.0,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,0.10,3.500,33.980,18.7,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,0.20,3.500,33.440,19.4,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,0.30,3.500,32.880,20.2,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,0.40,3.500,32.300,20.9,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,0.50,3.500,31.700,21.6,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,0.60,3.500,31.080,22.3,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,0.70,3.500,30.440,23.0,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,0.80,3.500,29.780,23.8,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,0.90,3.500,29.100,24.5,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,1.00,3.500,28.400,25.2,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,1.10,3.500,27.680,25.9,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,1.20,3.500,26.940,26.6,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,1.30,3.500,26.180,27.4,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,1.40,3.500,25.400,28.1,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,1.50,3.500,24.600,28.8,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,1.60,3.500,23.780,29.5,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,1.70,3.500,22.940,30.2,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,1.80,3.500,22.080,31.0,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,1.90,3.500,21.200,31.7,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,2.00,3.500,20.300,32.4,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,2.10,3.500,19.380,33.1,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,2.20,3.500,18.440,33.8,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,2.30,3.500,17.480,34.6,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,2.40,3.500,16.500,35.3,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,2.50,3.500,15.500,36.0,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,2.60,3.500,14.480,36.7,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,2.70,3.500,13.440,37.4,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,2.80,3.500,12.380,38.2,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,2.90,3.500,11.300,38.9,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,3.00,3.500,10.200,39.6,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,3.10,3.500,9.080,40.3,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,3.20,3.500,7.940,41.0,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,3.30,3.500,6.780,41.8,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,3.40,3.500,5.600,42.5,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,3.50,3.500,4.400,43.2,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,3.60,3.500,3.180,43.9,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,3.70,3.500,1.940,44.6,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,3.80,3.500,0.680,45.4,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,3.90,3.500,-0.600,46.1,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,4.00,3.500,-1.900,46.8,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,4.10,3.500,-3.220,47.5,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,4.20,3.500,-4.560,48.2,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,4.30,3.500,-5.920,49.0,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,4.40,3.500,-7.300,49.7,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,4.50,3.500,-8.700,50.4,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,4.60,3.500,-10.120,51.1,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,4.70,3.500,-11.560,51.8,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,4.80,3.500,-13.020,52.6,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_19,4.90,3.500,-14.500,53.3,Work-Zone Exit Acceleration (+2.0 m/s^2)
+VEH_20,0.00,4.000,68.600,50.4,Curved Taper Approach
+VEH_20,0.10,3.930,67.200,50.4,Curved Taper Approach
+VEH_20,0.20,3.860,65.800,50.4,Curved Taper Approach
+VEH_20,0.30,3.790,64.400,50.4,Curved Taper Approach
+VEH_20,0.40,3.720,63.000,50.4,Curved Taper Approach
+VEH_20,0.50,3.650,61.600,50.4,Curved Taper Approach
+VEH_20,0.60,3.580,60.200,50.4,Curved Taper Approach
+VEH_20,0.70,3.510,58.800,50.4,Curved Taper Approach
+VEH_20,0.80,3.440,57.400,50.4,Curved Taper Approach
+VEH_20,0.90,3.370,56.000,50.4,Curved Taper Approach
+VEH_20,1.00,3.300,54.600,50.4,Curved Taper Approach
+VEH_20,1.10,3.230,53.200,50.4,Curved Taper Approach
+VEH_20,1.20,3.160,51.800,50.4,Curved Taper Approach
+VEH_20,1.30,3.090,50.400,50.4,Curved Taper Approach
+VEH_20,1.40,3.020,49.000,50.4,Curved Taper Approach
+VEH_20,1.50,2.950,47.600,50.4,Curved Taper Approach
+VEH_20,1.60,2.880,46.204,50.3,Curved Taper Approach
+VEH_20,1.70,2.810,44.812,50.1,Curved Taper Approach
+VEH_20,1.80,2.740,43.424,50.0,Curved Taper Approach
+VEH_20,1.90,2.670,42.040,49.8,Curved Taper Approach
+VEH_20,2.00,2.600,40.660,49.7,Curved Taper Approach
+VEH_20,2.10,2.530,39.284,49.5,Curved Taper Approach
+VEH_20,2.20,2.460,37.912,49.4,Curved Taper Approach
+VEH_20,2.30,2.390,36.544,49.2,Curved Taper Approach
+VEH_20,2.40,2.320,35.180,49.1,Curved Taper Approach
+VEH_20,2.50,2.250,33.820,49.0,Curved Taper Approach
+VEH_20,2.60,2.180,32.464,48.8,Curved Taper Approach
+VEH_20,2.70,2.110,31.112,48.7,Curved Taper Approach
+VEH_20,2.80,2.040,29.764,48.5,Curved Taper Approach
+VEH_20,2.90,1.970,28.420,48.4,Curved Taper Approach
+VEH_20,3.00,1.900,27.080,48.2,Curved Taper Approach
+VEH_20,3.10,1.830,25.744,48.1,Curved Taper Approach
+VEH_20,3.20,1.760,24.412,48.0,Curved Taper Approach
+VEH_20,3.30,1.690,23.084,47.8,Curved Taper Approach
+VEH_20,3.40,1.620,21.760,47.7,Curved Taper Approach
+VEH_20,3.50,1.550,20.440,47.5,Curved Taper Approach
+VEH_20,3.60,1.480,19.124,47.4,Curved Taper Approach
+VEH_20,3.70,1.410,17.812,47.2,Curved Taper Approach
+VEH_20,3.80,1.340,16.504,47.1,Curved Taper Approach
+VEH_20,3.90,1.270,15.200,46.9,Curved Taper Approach
+VEH_20,4.00,1.200,13.900,46.8,Curved Taper Approach
+VEH_20,4.10,1.130,12.604,46.7,Curved Taper Approach
+VEH_20,4.20,1.060,11.312,46.5,Curved Taper Approach
+VEH_20,4.30,0.990,10.024,46.4,Curved Taper Approach
+VEH_20,4.40,0.920,8.740,46.2,Curved Taper Approach
+VEH_20,4.50,0.850,7.460,46.1,Curved Taper Approach
+VEH_20,4.60,0.780,6.184,45.9,Curved Taper Approach
+VEH_20,4.70,0.710,4.912,45.8,Curved Taper Approach
+VEH_20,4.80,0.640,3.644,45.6,Curved Taper Approach
+VEH_20,4.90,0.570,2.380,45.5,Curved Taper Approach
