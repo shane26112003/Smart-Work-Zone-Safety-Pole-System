@@ -31,6 +31,8 @@ class FusedEntity:
     y: float                            # Longitudinal position in meters along road
     vx: float                           # Lateral velocity (m/s)
     vy: float                           # Longitudinal velocity (m/s)
+    ax: float = 0.0                     # Lateral acceleration (m/s^2)
+    ay: float = 0.0                     # Longitudinal acceleration (m/s^2)
     speed_mps: float = 0.0              # Scalar speed in m/s
     speed_kmh: float = 0.0              # Speed in km/h
     heading_deg: float = 0.0            # Direction of travel (degrees)
@@ -46,17 +48,23 @@ class FusedEntity:
 
 
 class EKFStateFilter:
-    """Extended Kalman Filter for individual vehicle or worker state [x, y, vx, vy]."""
+    """
+    6D Extended Kalman Filter (Constant Acceleration Model).
+    State: [x, y, vx, vy, ax, ay]^T
+    Explicitly tracks position, velocity, and dynamic acceleration/deceleration.
+    """
 
-    def __init__(self, x0: float, y0: float, vx0: float = 0.0, vy0: float = 0.0, is_vehicle: bool = True):
-        self.state = np.array([[x0], [y0], [vx0], [vy0]], dtype=float)
-        # Covariance matrix P
-        self.P = np.diag([2.0, 2.0, 5.0, 5.0])
+    def __init__(self, x0: float, y0: float, vx0: float = 0.0, vy0: float = 0.0, 
+                 ax0: float = 0.0, ay0: float = 0.0, is_vehicle: bool = True):
+        self.state = np.array([[x0], [y0], [vx0], [vy0], [ax0], [ay0]], dtype=float)
+        # Covariance matrix P (6x6)
+        self.P = np.diag([2.0, 2.0, 5.0, 5.0, 2.0, 2.0])
         
-        # Process noise Q
+        # Process noise Q (6x6)
         q_pos = 0.05 if is_vehicle else 0.02
         q_vel = 0.20 if is_vehicle else 0.10
-        self.Q = np.diag([q_pos, q_pos, q_vel, q_vel])
+        q_acc = 0.60 if is_vehicle else 0.15
+        self.Q = np.diag([q_pos, q_pos, q_vel, q_vel, q_acc, q_acc])
         
         # Camera measurement noise R_cam (meters)
         self.R_cam = np.diag([0.6, 1.2]) # Higher longitudinal error from camera perspective
@@ -64,29 +72,31 @@ class EKFStateFilter:
         self.R_lidar = np.diag([0.05, 0.2])
 
     def predict(self, dt: float):
-        """Predict state forward by dt seconds."""
+        """Predict state forward by dt seconds with constant acceleration model."""
+        dt2 = 0.5 * (dt ** 2)
         F = np.array([
-            [1.0, 0.0, dt,  0.0],
-            [0.0, 1.0, 0.0, dt ],
-            [0.0, 0.0, 1.0, 0.0],
-            [0.0, 0.0, 0.0, 1.0]
+            [1.0, 0.0, dt,  0.0, dt2, 0.0],
+            [0.0, 1.0, 0.0, dt,  0.0, dt2],
+            [0.0, 0.0, 1.0, 0.0, dt,  0.0],
+            [0.0, 0.0, 0.0, 1.0, 0.0, dt ],
+            [0.0, 0.0, 0.0, 0.0, 1.0, 0.0],
+            [0.0, 0.0, 0.0, 0.0, 0.0, 1.0]
         ])
         self.state = np.dot(F, self.state)
         self.P = np.dot(np.dot(F, self.P), F.T) + self.Q
 
     def update_camera(self, x_cam: float, y_cam: float):
         """Measurement update from Camera BEV."""
-        H = np.array([
-            [1.0, 0.0, 0.0, 0.0],
-            [0.0, 1.0, 0.0, 0.0]
-        ])
+        H = np.zeros((2, 6))
+        H[0, 0] = 1.0
+        H[1, 1] = 1.0
         z = np.array([[x_cam], [y_cam]])
         y = z - np.dot(H, self.state)
         S = np.dot(np.dot(H, self.P), H.T) + self.R_cam
         K = np.dot(np.dot(self.P, H.T), np.linalg.inv(S))
 
         self.state = self.state + np.dot(K, y)
-        I = np.eye(4)
+        I = np.eye(6)
         self.P = np.dot(I - np.dot(K, H), self.P)
 
     def update_lidar(self, dist_m: float, range_rate_mps: float):
@@ -107,8 +117,8 @@ class EKFStateFilter:
         z = np.array([[dist_m], [range_rate_mps]])
         h_x = np.array([[r], [r_dot]])
         
-        # Jacobian H matrix
-        H = np.zeros((2, 4))
+        # Jacobian H matrix (2x6)
+        H = np.zeros((2, 6))
         H[0, 0] = x / r
         H[0, 1] = y / r
         H[1, 0] = (vx * r - (x*vx + y*vy) * (x/r)) / (r*r)
@@ -121,7 +131,7 @@ class EKFStateFilter:
         K = np.dot(np.dot(self.P, H.T), np.linalg.inv(S))
 
         self.state = self.state + np.dot(K, y_res)
-        I = np.eye(4)
+        I = np.eye(6)
         self.P = np.dot(I - np.dot(K, H), self.P)
 
 
@@ -177,20 +187,30 @@ class SensorFusionEngine:
                     lidar_matched = True
                     lidar_dist = lidar_reading.distance_m
 
-            # Extract updated state
+            # Extract updated state (6D)
             fx = float(kf.state[0, 0])
             fy = float(kf.state[1, 0])
             fvx = float(kf.state[2, 0])
             fvy = float(kf.state[3, 0])
+            fax = float(kf.state[4, 0])
+            fay = float(kf.state[5, 0])
             speed = math.sqrt(fvx*fvx + fvy*fvy)
             heading = math.degrees(math.atan2(fvx, -fvy)) # 0 deg is straight down road
 
-            # Trajectory Prediction (rollout for 3.0 seconds @ 0.5s steps)
+            # Trajectory Prediction: 3.0-second Constant Acceleration Rollout
             trajectory = []
             for step in range(1, 7):
                 horizon_t = step * 0.5
-                px = fx + fvx * horizon_t
-                py = fy + fvy * horizon_t
+                # Physics clamp: if approaching vehicle is decelerating and stops, hold position
+                if fvy < 0 and fay > 0:
+                    t_stop = abs(fvy) / max(0.01, fay)
+                    if horizon_t > t_stop:
+                        py_stop = fy + fvy * t_stop + 0.5 * fay * (t_stop ** 2)
+                        px_stop = fx + fvx * t_stop + 0.5 * fax * (t_stop ** 2)
+                        trajectory.append((round(px_stop, 2), round(py_stop, 2)))
+                        continue
+                px = fx + fvx * horizon_t + 0.5 * fax * (horizon_t ** 2)
+                py = fy + fvy * horizon_t + 0.5 * fay * (horizon_t ** 2)
                 trajectory.append((round(px, 2), round(py, 2)))
 
             fused = FusedEntity(
@@ -200,6 +220,8 @@ class SensorFusionEngine:
                 y=round(fy, 2),
                 vx=round(fvx, 2),
                 vy=round(fvy, 2),
+                ax=round(fax, 2),
+                ay=round(fay, 2),
                 speed_mps=round(speed, 2),
                 speed_kmh=round(speed * 3.6, 1),
                 heading_deg=round(heading, 1),

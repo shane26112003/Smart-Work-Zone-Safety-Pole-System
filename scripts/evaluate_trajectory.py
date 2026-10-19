@@ -66,11 +66,13 @@ def evaluate_trajectory_sequence(
         ekf.predict(dt)
         ekf.update_camera(x_obs, y_obs)
 
-    # 3. Predict future trajectory up to pred_horizon_sec
+    # 3. Predict future trajectory up to pred_horizon_sec (Constant Acceleration)
     fx = ekf.state[0, 0]
     fy = ekf.state[1, 0]
     fvx = ekf.state[2, 0]
     fvy = ekf.state[3, 0]
+    fax = ekf.state[4, 0] if ekf.state.shape[0] > 4 else 0.0
+    fay = ekf.state[5, 0] if ekf.state.shape[0] > 5 else 0.0
     
     t_origin = history_pts[-1][0]
     steps_count = int(round(pred_horizon_sec / pred_step_sec))
@@ -78,8 +80,17 @@ def evaluate_trajectory_sequence(
     predictions = {}
     for step in range(1, steps_count + 1):
         dt_horizon = step * pred_step_sec
-        px = fx + fvx * dt_horizon
-        py = fy + fvy * dt_horizon
+        # Physics clamp: if vehicle is decelerating and stops, hold stopped position
+        if fvy < 0 and fay > 0:
+            t_stop = abs(fvy) / max(0.01, fay)
+            if dt_horizon > t_stop:
+                py_stop = fy + fvy * t_stop + 0.5 * fay * (t_stop ** 2)
+                px_stop = fx + fvx * t_stop + 0.5 * fax * (t_stop ** 2)
+                target_time = t_origin + dt_horizon
+                predictions[round(dt_horizon, 2)] = (px_stop, py_stop, target_time)
+                continue
+        px = fx + fvx * dt_horizon + 0.5 * fax * (dt_horizon ** 2)
+        py = fy + fvy * dt_horizon + 0.5 * fay * (dt_horizon ** 2)
         target_time = t_origin + dt_horizon
         predictions[round(dt_horizon, 2)] = (px, py, target_time)
 
