@@ -159,6 +159,8 @@ class DashboardServer:
                 "y": e.y,
                 "vx": e.vx,
                 "vy": e.vy,
+                "ax": getattr(e, "ax", 0.0),
+                "ay": getattr(e, "ay", 0.0),
                 "speed_kmh": e.speed_kmh,
                 "heading_deg": e.heading_deg,
                 "trajectory": e.predicted_trajectory,
